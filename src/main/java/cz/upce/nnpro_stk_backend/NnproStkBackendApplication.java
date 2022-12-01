@@ -25,4 +25,3 @@ public class NnproStkBackendApplication {
 
 }
 
-//security scheme? Pro swagger, abys mohl testovat token?

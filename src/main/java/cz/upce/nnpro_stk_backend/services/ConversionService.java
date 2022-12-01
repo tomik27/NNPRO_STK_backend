@@ -134,6 +134,13 @@ public class ConversionService {
         return user;
     }
 
+    public static Fault convertToFault(FaultDto faultDto){
+        Fault fault= new Fault();
+        fault.setDescription(faultDto.getDescription());
+        fault.setTypeOfFault(faultDto.getTypeOfFault());
+        return fault;
+    }
+
 //    public static OwnerDetailOutDto convertToOwnerDetailOutDto(Owner owner, Page<Car> carPage) {
 //        OwnerDetailOutDto ownerDetailOutDto = new OwnerDetailOutDto();
 //        ownerDetailOutDto.setId(owner.getId());

@@ -20,9 +20,6 @@ public class BranchOffice {
     @OneToMany(mappedBy = "branchOffice", cascade = CascadeType.REMOVE)
     private Set<User> users;
 
-    /*@OneToMany(mappedBy = "branchOffice", cascade = CascadeType.REMOVE)
-    private Set<Car> cars;*/
-
     public String getCity() {
         return city;
     }

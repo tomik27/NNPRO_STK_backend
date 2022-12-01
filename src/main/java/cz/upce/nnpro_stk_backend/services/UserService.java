@@ -98,8 +98,8 @@ public class UserService {
     public void init() {
         if (roleRepository.count() != 3) {
             roleRepository.deleteAll();
-            roleRepository.save(new Role("ROLE_Kraj", "Krajský pracovník CRV"));
-            roleRepository.save(new Role("ROLE_Okres", "Okresní pracovník CRV"));
+            roleRepository.save(new Role("ROLE_Manažer", "Manažer STK"));
+            roleRepository.save(new Role("ROLE_technik", "Technik STK"));
             roleRepository.save(new Role("ROLE_Admin", "Administrátor"));
         }
         if (!userRepository.existsByRoleName("ROLE_Admin")) {

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -23,6 +24,17 @@ public class User {
     private BranchOffice branchOffice;
     @OneToOne
     private Role role;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private Set<Inspection> inspections;
+
+    public Set<Inspection> getInspections() {
+        return inspections;
+    }
+
+    public void setInspections(Set<Inspection> inspections) {
+        this.inspections = inspections;
+    }
 
     public BranchOffice getBranchOffice() {
         return branchOffice;
