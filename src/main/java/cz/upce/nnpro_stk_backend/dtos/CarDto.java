@@ -1,32 +1,18 @@
-package cz.upce.nnpro_stk_backend.entities;
+package cz.upce.nnpro_stk_backend.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import cz.upce.nnpro_stk_backend.entities.Inspection;
 
-import javax.persistence.*;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 
-@Entity
-public class Car {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+public class CarDto {
     private String operable;
     @NotBlank(message = "SPZ is mandatory.")
     private String spz;
     private String vin;
-    @ManyToOne
-    @JoinColumn(name = "inspection_id")
-    @JsonIgnore
-    private Inspection inspection;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private Long inspectionId;
 
     public String getOperable() {
         return operable;
@@ -52,11 +38,11 @@ public class Car {
         this.vin = vin;
     }
 
-    public Inspection getInspection() {
-        return inspection;
+    public Long getInspectionId() {
+        return inspectionId;
     }
 
-    public void setInspection(Inspection inspection) {
-        this.inspection = inspection;
+    public void setInspectionId(Long inspectionId) {
+        this.inspectionId = inspectionId;
     }
 }

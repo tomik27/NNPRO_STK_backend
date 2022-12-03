@@ -1,7 +1,9 @@
 package cz.upce.nnpro_stk_backend.controllers;
 
+import cz.upce.nnpro_stk_backend.dtos.CarDto;
 import cz.upce.nnpro_stk_backend.dtos.InspectionFaultsOutDto;
 import cz.upce.nnpro_stk_backend.dtos.InspectionInDto;
+import cz.upce.nnpro_stk_backend.entities.BranchOffice;
 import cz.upce.nnpro_stk_backend.entities.Fault;
 import cz.upce.nnpro_stk_backend.entities.Inspection;
 import cz.upce.nnpro_stk_backend.services.InspectionService;
@@ -68,6 +70,21 @@ public class InspectionController {
         return ResponseEntity.ok(inspectionService.addInspection(inspectionInDto));
     }
 
+    @Operation(summary = "Edit inspection")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Car edited and returned",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = BranchOffice.class))}),
+            @ApiResponse(responseCode = "401", description = "unauthorized",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Inspection not found",
+                    content = @Content),})
+    @PreAuthorize("hasRole('ROLE_Admin') || hasRole('ROLE_Technik')")
+    @PutMapping("/editInspection/{inspectionId}")
+    public ResponseEntity<?> editCar(@PathVariable Long inspectionId, @RequestBody @Valid InspectionInDto inspectionInDto) {
+        return ResponseEntity.ok(inspectionService.editInspection(inspectionId, inspectionInDto));
+    }
+
     @Operation(summary = "Remove inspection")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Inspection removed and returned",
@@ -79,7 +96,7 @@ public class InspectionController {
                     content = @Content),})
     @PreAuthorize("hasRole('ROLE_Admin') || hasRole('ROLE_Technik')")
     @DeleteMapping("/removeInspection/{inspectionId}")
-    public ResponseEntity<?> removeFault(@PathVariable Long inspectionId) {
+    public ResponseEntity<?> removeCar(@PathVariable Long inspectionId) {
         return ResponseEntity.ok(inspectionService.removeInspection(inspectionId));
     }
 
@@ -94,6 +111,18 @@ public class InspectionController {
     public ResponseEntity<?> addFaultToInspection(@RequestBody @Valid InspectionFaultsOutDto faultOfInspectionDto) {
         return ResponseEntity.ok(inspectionService.addFaultToInspection(faultOfInspectionDto));
     }
+
+    /*@Operation(summary = "Remove fault from inspection")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Inspection fault removed",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Inspection.class))}),
+            @ApiResponse(responseCode = "401", description = "unauthorized",
+                    content = @Content)})
+    @PostMapping("/removeFaultFromInspection")
+    public ResponseEntity<?> removeFaultFromInspection(@PathVariable Long inspectionId,@PathVariable Long faultId) {
+        return ResponseEntity.ok(inspectionService.removeFaultFromInspection(inspectionId,faultId));
+    }*/
 
 
     /*@Operation(summary = "Get all faults in inspections ")

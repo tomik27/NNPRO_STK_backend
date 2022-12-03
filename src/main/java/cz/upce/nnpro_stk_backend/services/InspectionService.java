@@ -1,9 +1,6 @@
 package cz.upce.nnpro_stk_backend.services;
 
-import cz.upce.nnpro_stk_backend.dtos.FaultOfInspectionDto;
-import cz.upce.nnpro_stk_backend.dtos.InspectionFaultsOutDto;
-import cz.upce.nnpro_stk_backend.dtos.InspectionInDto;
-import cz.upce.nnpro_stk_backend.dtos.InspectionOutDto;
+import cz.upce.nnpro_stk_backend.dtos.*;
 import cz.upce.nnpro_stk_backend.entities.*;
 import cz.upce.nnpro_stk_backend.repositories.FaultInspectionRepository;
 import cz.upce.nnpro_stk_backend.repositories.FaultRepository;
@@ -63,4 +60,17 @@ public class InspectionService {
         FaultOfInspection save = faultInspectionRepository.save(faultOfInspection);
         return save;
     }
+
+    public Inspection editInspection(Long inspectionId, InspectionInDto inspectionInDto) {
+        inspectionRepository.findById(inspectionId).orElseThrow(() -> new NoSuchElementException("Inspection not found!"));
+        User user = userRepository.findById(inspectionInDto.getUser()).orElseThrow(() -> new NoSuchElementException("User not found!"));
+        Inspection inspection = ConversionService.convertToInspection(inspectionInDto, user);
+        inspection.setId(inspectionId);
+        Inspection save = inspectionRepository.save(inspection);
+        return save;
+    }
+
+    /*public Object removeFaultFromInspection(Long inspectionId, Long faultId) {
+        BranchOffice branchOffice = faultInspectionRepository.existsByF officeId).orElseThrow(() -> new NoSuchElementException("Branch office not found!"));
+    }*/
 }

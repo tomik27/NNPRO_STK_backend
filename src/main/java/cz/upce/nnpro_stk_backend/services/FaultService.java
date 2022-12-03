@@ -1,14 +1,13 @@
 package cz.upce.nnpro_stk_backend.services;
 
-import cz.upce.nnpro_stk_backend.dtos.BranchOfficeInDto;
 import cz.upce.nnpro_stk_backend.dtos.FaultDto;
-import cz.upce.nnpro_stk_backend.dtos.UserDto;
 import cz.upce.nnpro_stk_backend.entities.*;
 import cz.upce.nnpro_stk_backend.repositories.FaultRepository;
 import cz.upce.nnpro_stk_backend.repositories.TypeOfFaultRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -54,17 +53,18 @@ public class FaultService {
         return faults;
     }
 
-    public Fault editFault(Long faultId, Fault fault) {
-        if (faultRepository.existsByDescription(fault.getDescription())) {
+    public Fault editFault(Long faultId,  FaultDto faultDto) {
+         faultRepository.findById(faultId).orElseThrow(() -> new NoSuchElementException("Fault not found!"));
+
+        if (faultRepository.existsByDescription(faultDto.getDescription())) {
             throw new IllegalArgumentException("The description already exists.");
         }
-       /* Optional<Role> role = roleRepository.findById(userDto.getRole() == null ? 0 : userDto.getRole());
-        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("User not found!"));
-        User editedUser = ConversionService.convertToUser(userDto, user, role);
-        User save = userRepository.save(editedUser);*/
-        return new Fault();
+        TypeOfFault typeOfFault = typeOfFaultRepository.findById(faultDto.getTypeOfFault()).orElseThrow(() -> new NoSuchElementException("TypeOfFault not found!"));;
+        Fault fault = ConversionService.convertToFault(faultDto, typeOfFault);
+        fault.setId(faultId);
+        Fault save = faultRepository.save(fault);
+        return save;
     }
-
 
     @PostConstruct
     public void init() {

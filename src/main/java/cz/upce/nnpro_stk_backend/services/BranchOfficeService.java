@@ -75,7 +75,6 @@ public class BranchOfficeService {
         return detailOutDto;
     }
 
-
     public List<BranchOffice> getAllOffices() {
         List<BranchOffice> branchOffices = branchOfficeRepository.findAll();
         return branchOffices;

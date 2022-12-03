@@ -1,6 +1,8 @@
 package cz.upce.nnpro_stk_backend.controllers;
 
+import cz.upce.nnpro_stk_backend.dtos.CarDto;
 import cz.upce.nnpro_stk_backend.dtos.FaultDto;
+import cz.upce.nnpro_stk_backend.entities.BranchOffice;
 import cz.upce.nnpro_stk_backend.entities.Fault;
 import cz.upce.nnpro_stk_backend.entities.Role;
 import cz.upce.nnpro_stk_backend.repositories.TypeOfFaultRepository;
@@ -67,6 +69,21 @@ public class FaultController {
     @PostMapping("/addFault")
     public ResponseEntity<?> addOffice(@RequestBody @Valid FaultDto faultDto) {
         return ResponseEntity.ok(faultService.addFault(faultDto));
+    }
+
+    @Operation(summary = "Edit fault")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Car edited and returned",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = BranchOffice.class))}),
+            @ApiResponse(responseCode = "401", description = "unauthorized",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Fault not found",
+                    content = @Content),})
+    @PreAuthorize("hasRole('ROLE_Admin') || hasRole('ROLE_Technik')")
+    @PutMapping("/editFault/{faultId}")
+    public ResponseEntity<?> editCar(@PathVariable Long faultId, @RequestBody @Valid FaultDto faultDto) {
+        return ResponseEntity.ok(faultService.editFault(faultId, faultDto));
     }
 
     @Operation(summary = "Remove fault")

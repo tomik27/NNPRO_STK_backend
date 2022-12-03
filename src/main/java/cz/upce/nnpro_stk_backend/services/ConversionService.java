@@ -152,6 +152,13 @@ public class ConversionService {
         return fault;
     }
 
+    public static Fault convertToFault(FaultDto faultDto, TypeOfFault typeOfFault){
+        Fault fault= new Fault();
+        fault.setDescription(faultDto.getDescription());
+        fault.setTypeOfFault(typeOfFault);
+        return fault;
+    }
+
     public static Inspection convertToInspection(InspectionInDto inspectionInDto, User user) {
         Inspection inspection = new Inspection();
         inspection.setInspectionTime(inspectionInDto.getInspectionTime());
@@ -183,6 +190,15 @@ public class ConversionService {
         inspectionOutDto.setResult(inspection.getResult());
         inspectionOutDto.setDate(inspection.getDate());
         return inspectionOutDto;
+    }
+
+    public static Car convertToCar(CarDto carDto, Inspection inspection) {
+        Car car = new Car();
+        car.setOperable(carDto.getOperable());
+        car.setSpz(carDto.getSpz());
+        car.setVin(carDto.getVin());
+        car.setInspection(inspection);
+        return car;
     }
 
 //    public static OwnerDetailOutDto convertToOwnerDetailOutDto(Owner owner, Page<Car> carPage) {

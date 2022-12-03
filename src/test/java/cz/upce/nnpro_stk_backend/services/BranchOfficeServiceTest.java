@@ -1,8 +1,8 @@
 package cz.upce.nnpro_stk_backend.services;
 
-import cz.upce.nnpro_backend.Entities.BranchOffice;
-import cz.upce.nnpro_backend.dtos.BranchOfficeIdUserIdDto;
-import cz.upce.nnpro_backend.dtos.BranchOfficeInDto;
+import cz.upce.nnpro_stk_backend.entities.BranchOffice;
+import cz.upce.nnpro_stk_backend.dtos.BranchOfficeIdUserIdDto;
+import cz.upce.nnpro_stk_backend.dtos.BranchOfficeInDto;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
