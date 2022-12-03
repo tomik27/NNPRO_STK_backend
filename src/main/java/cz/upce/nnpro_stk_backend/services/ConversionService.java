@@ -6,6 +6,7 @@ import cz.upce.nnpro_stk_backend.dtos.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class ConversionService {
     public static UserDetailOutDto convertToUserDetailOutDto(User user) {
@@ -158,6 +159,30 @@ public class ConversionService {
         inspection.setResult(inspectionInDto.getResult());
         inspection.setUser(user);
         return inspection;
+    }
+
+    public static List<FaultOfInspectionDto> convertToListOfFaultDto(Set<FaultOfInspection> setFaults) {
+        List<FaultOfInspectionDto> listFaultsDto = new ArrayList<>();
+        for (FaultOfInspection faultOfInspection : setFaults) {
+            FaultOfInspectionDto faultOfInspectionDto=new FaultOfInspectionDto();
+            faultOfInspectionDto.setFaultId(faultOfInspection.getFault().getId());
+            faultOfInspectionDto.setInspectionId(faultOfInspection.getInspection().getId());
+            faultOfInspectionDto.setFaultDescription(faultOfInspection.getFault().getDescription());
+            //todo zmenit na id typOfFault
+            faultOfInspectionDto.setTypeOfFault(faultOfInspection.getFault().getTypeOfFault().getDescription());
+            listFaultsDto.add(faultOfInspectionDto);
+        }
+        return listFaultsDto;
+    }
+
+    public static InspectionOutDto convertToInspectionOutDto(Inspection inspection, List<FaultOfInspectionDto> faultOfInspectionDtos) {
+        InspectionOutDto inspectionOutDto = new InspectionOutDto();
+        inspectionOutDto.setInspectionTime(inspection.getInspectionTime());
+        inspectionOutDto.setFaultsOfInspectionList(faultOfInspectionDtos);
+        inspectionOutDto.setDate(inspection.getDate());
+        inspectionOutDto.setResult(inspection.getResult());
+        inspectionOutDto.setDate(inspection.getDate());
+        return inspectionOutDto;
     }
 
 //    public static OwnerDetailOutDto convertToOwnerDetailOutDto(Owner owner, Page<Car> carPage) {

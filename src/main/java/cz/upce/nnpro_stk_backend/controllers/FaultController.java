@@ -78,7 +78,7 @@ public class FaultController {
                     content = @Content),
             @ApiResponse(responseCode = "500", description = "Fault not found",
                     content = @Content),})
-    @PreAuthorize("hasRole('ROLE_Admin') || hasRole('ROLE_Okres')")
+    @PreAuthorize("hasRole('ROLE_Admin') || hasRole('ROLE_Technik')")
     @DeleteMapping("/removeFault/{faultId}")
     public ResponseEntity<?> removeFault(@PathVariable Long faultId) {
         return ResponseEntity.ok(faultService.removeFault(faultId));
@@ -98,5 +98,7 @@ public class FaultController {
     public ResponseEntity<?> getAllTypeOfFaults() {
         return ResponseEntity.ok(typeOfFaultRepository.findAll());
     }
+
+
 
 }

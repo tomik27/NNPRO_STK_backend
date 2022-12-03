@@ -1,21 +1,19 @@
 package cz.upce.nnpro_stk_backend.services;
 
 import cz.upce.nnpro_stk_backend.dtos.FaultOfInspectionDto;
+import cz.upce.nnpro_stk_backend.dtos.InspectionFaultsOutDto;
 import cz.upce.nnpro_stk_backend.dtos.InspectionInDto;
+import cz.upce.nnpro_stk_backend.dtos.InspectionOutDto;
 import cz.upce.nnpro_stk_backend.entities.*;
 import cz.upce.nnpro_stk_backend.repositories.FaultInspectionRepository;
 import cz.upce.nnpro_stk_backend.repositories.FaultRepository;
 import cz.upce.nnpro_stk_backend.repositories.InspectionRepository;
 import cz.upce.nnpro_stk_backend.repositories.UserRepository;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 @Service
 public class InspectionService {
@@ -43,16 +41,19 @@ public class InspectionService {
         inspectionRepository.deleteById(inspectionId);
         return inspection;
     }
-    public Inspection getInspection(Long inspectionId) {
+    public InspectionOutDto  getInspection(Long inspectionId) {
         Inspection inspection = inspectionRepository.findById(inspectionId).orElseThrow(() -> new NoSuchElementException("Inspection not found!"));
-        return inspection;
+        Set<FaultOfInspection> faultsbyInspection_id = faultInspectionRepository.findByInspection_Id(inspection.getId());
+        List<FaultOfInspectionDto> faultOfInspectionDtos = ConversionService.convertToListOfFaultDto(faultsbyInspection_id);
+        InspectionOutDto inspectionOutDto = ConversionService.convertToInspectionOutDto(inspection, faultOfInspectionDtos);
+        return inspectionOutDto;
     }
     public List<Inspection> getAllInspections() {
         List<Inspection> inspections = inspectionRepository.findAll();
         return inspections;
     }
 
-    public FaultOfInspection addFaultToInspection(FaultOfInspectionDto faultOfInspectionDto) {
+    public FaultOfInspection addFaultToInspection(InspectionFaultsOutDto faultOfInspectionDto) {
         Inspection inspection = inspectionRepository.findById(faultOfInspectionDto.getInspection()).orElseThrow(() -> new NoSuchElementException("Inspection not found!"));
         Fault fault = faultRepository.findById(faultOfInspectionDto.getFault()).orElseThrow(() -> new NoSuchElementException("Fault not found!"));
 

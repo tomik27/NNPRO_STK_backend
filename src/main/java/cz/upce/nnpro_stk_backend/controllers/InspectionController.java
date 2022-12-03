@@ -1,6 +1,6 @@
 package cz.upce.nnpro_stk_backend.controllers;
 
-import cz.upce.nnpro_stk_backend.dtos.FaultOfInspectionDto;
+import cz.upce.nnpro_stk_backend.dtos.InspectionFaultsOutDto;
 import cz.upce.nnpro_stk_backend.dtos.InspectionInDto;
 import cz.upce.nnpro_stk_backend.entities.Fault;
 import cz.upce.nnpro_stk_backend.entities.Inspection;
@@ -77,7 +77,7 @@ public class InspectionController {
                     content = @Content),
             @ApiResponse(responseCode = "500", description = "Inspection not found",
                     content = @Content),})
-    @PreAuthorize("hasRole('ROLE_Admin') || hasRole('ROLE_Okres')")
+    @PreAuthorize("hasRole('ROLE_Admin') || hasRole('ROLE_Technik')")
     @DeleteMapping("/removeInspection/{inspectionId}")
     public ResponseEntity<?> removeFault(@PathVariable Long inspectionId) {
         return ResponseEntity.ok(inspectionService.removeInspection(inspectionId));
@@ -91,7 +91,7 @@ public class InspectionController {
             @ApiResponse(responseCode = "401", description = "unauthorized",
                     content = @Content)})
     @PostMapping("/addFaultToInspection")
-    public ResponseEntity<?> addFaultToInspection(@RequestBody @Valid FaultOfInspectionDto faultOfInspectionDto) {
+    public ResponseEntity<?> addFaultToInspection(@RequestBody @Valid InspectionFaultsOutDto faultOfInspectionDto) {
         return ResponseEntity.ok(inspectionService.addFaultToInspection(faultOfInspectionDto));
     }
 

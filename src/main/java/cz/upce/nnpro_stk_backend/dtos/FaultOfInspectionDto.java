@@ -1,22 +1,54 @@
 package cz.upce.nnpro_stk_backend.dtos;
 
 public class FaultOfInspectionDto {
-    private Long inspection;
-    private Long fault;
 
-    public Long getInspection() {
-        return inspection;
+    private Long id;
+
+    private Long inspectionId;
+
+    private Long faultId;
+
+    private String faultDescription;
+
+    private String typeOfFault;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setInspection(Long inspection) {
-        this.inspection = inspection;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Long getFault() {
-        return fault;
+    public Long getInspectionId() {
+        return inspectionId;
     }
 
-    public void setFault(Long fault) {
-        this.fault = fault;
+    public void setInspectionId(Long inspectionId) {
+        this.inspectionId = inspectionId;
+    }
+
+    public Long getFaultId() {
+        return faultId;
+    }
+
+    public void setFaultId(Long faultId) {
+        this.faultId = faultId;
+    }
+
+    public String getFaultDescription() {
+        return faultDescription;
+    }
+
+    public void setFaultDescription(String faultDescription) {
+        this.faultDescription = faultDescription;
+    }
+
+    public String getTypeOfFault() {
+        return typeOfFault;
+    }
+
+    public void setTypeOfFault(String typeOfFault) {
+        this.typeOfFault = typeOfFault;
     }
 }

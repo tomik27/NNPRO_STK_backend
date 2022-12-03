@@ -99,7 +99,7 @@ public class UserService {
         if (roleRepository.count() != 3) {
             roleRepository.deleteAll();
             roleRepository.save(new Role("ROLE_Manažer", "Manažer STK"));
-            roleRepository.save(new Role("ROLE_technik", "Technik STK"));
+            roleRepository.save(new Role("ROLE_Technik", "Technik STK"));
             roleRepository.save(new Role("ROLE_Admin", "Administrátor"));
         }
         if (!userRepository.existsByRoleName("ROLE_Admin")) {
