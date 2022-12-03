@@ -2,12 +2,16 @@ package cz.upce.nnpro_stk_backend.services;
 
 import cz.upce.nnpro_stk_backend.dtos.BranchOfficeInDto;
 import cz.upce.nnpro_stk_backend.dtos.FaultDto;
+import cz.upce.nnpro_stk_backend.dtos.UserDto;
 import cz.upce.nnpro_stk_backend.entities.*;
 import cz.upce.nnpro_stk_backend.repositories.FaultRepository;
 import cz.upce.nnpro_stk_backend.repositories.TypeOfFaultRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class FaultService {
@@ -27,11 +31,38 @@ public class FaultService {
         //todo Jak se bude vybirat zavady? z comboboxu? Nebo se budou zadávat vždy novy popis?
        // if(typeOfFaultRepository.findb)
 
-        Fault fault= new Fault();
-        fault.setDescription(faultDto.getDescription());
-        fault.setTypeOfFault(faultDto.getTypeOfFault());
+        Optional<TypeOfFault> typeOfFault = typeOfFaultRepository.findById(faultDto.getTypeOfFault() == null ? 0 : faultDto.getTypeOfFault());
+        Fault fault = ConversionService.convertToFault(faultDto, typeOfFault);
+       // fault.setDescription(faultDto.getDescription());
+        //fault.setTypeOfFault(faultDto.getTypeOfFault());
         Fault save = faultRepository.save(fault);
         return save;
+    }
+    public Fault removeFault(Long faultId) {
+        Fault fault = faultRepository.findById(faultId).orElseThrow(() -> new NoSuchElementException("Fault not found!"));
+        faultRepository.deleteById(faultId);
+        return fault;
+    }
+
+    public Fault getFault(Long faultID){
+        Fault fault = faultRepository.findById(faultID).orElseThrow(() -> new NoSuchElementException("Fault not found!"));
+             return fault;
+    }
+
+    public List<Fault> getAllFaults() {
+        List<Fault> faults = faultRepository.findAll();
+        return faults;
+    }
+
+    public Fault editFault(Long faultId, Fault fault) {
+        if (faultRepository.existsByDescription(fault.getDescription())) {
+            throw new IllegalArgumentException("The description already exists.");
+        }
+       /* Optional<Role> role = roleRepository.findById(userDto.getRole() == null ? 0 : userDto.getRole());
+        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("User not found!"));
+        User editedUser = ConversionService.convertToUser(userDto, user, role);
+        User save = userRepository.save(editedUser);*/
+        return new Fault();
     }
 
 

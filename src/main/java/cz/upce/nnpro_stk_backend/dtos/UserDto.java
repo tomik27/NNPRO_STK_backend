@@ -12,7 +12,33 @@ public class UserDto {
     private String jobPosition;
     @NotNull(message = "Role id is mandatory.")
     private Long role;
+    private int hourRate;
+    private boolean declarationOfTax;
+    private int numberOfChildren;
 
+    public int getHourRate() {
+        return hourRate;
+    }
+
+    public void setHourRate(int hourRate) {
+        this.hourRate = hourRate;
+    }
+
+    public boolean getDeclarationOfTax() {
+        return declarationOfTax;
+    }
+
+    public void setDeclarationOfTax(boolean declarationOfTax) {
+        this.declarationOfTax = declarationOfTax;
+    }
+
+    public int getNumberOfChildren() {
+        return numberOfChildren;
+    }
+
+    public void setNumberOfChildren(int numberOfChildren) {
+        this.numberOfChildren = numberOfChildren;
+    }
 
     public Long getRole() {
         return role;

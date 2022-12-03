@@ -1,7 +1,5 @@
 package cz.upce.nnpro_stk_backend.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -11,19 +9,20 @@ public class Fault {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
+
     @OneToOne
     private TypeOfFault typeOfFault;
 
 
     @OneToMany(mappedBy = "fault", cascade = CascadeType.REMOVE)
-    private Set<FaultInspection> faultInspection;
+    private Set<FaultOfInspection> faultOfInspection;
 
-    public Set<FaultInspection> getFaultInspection() {
-        return faultInspection;
+    public Set<FaultOfInspection> getFaultInspection() {
+        return faultOfInspection;
     }
 
-    public void setFaultInspection(Set<FaultInspection> faultInspection) {
-        this.faultInspection = faultInspection;
+    public void setFaultInspection(Set<FaultOfInspection> faultOfInspection) {
+        this.faultOfInspection = faultOfInspection;
     }
 
     public Long getId() {

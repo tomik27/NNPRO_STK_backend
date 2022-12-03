@@ -7,8 +7,7 @@ import javax.validation.constraints.NotBlank;
 
 public class FaultDto {
     private String description;
-    @NotBlank(message = "TypeOFault is mandatory.")
-    private TypeOfFault typeOfFault;
+    private Long typeOfFault;
 
     public String getDescription() {
         return description;
@@ -18,11 +17,11 @@ public class FaultDto {
         this.description = description;
     }
 
-    public TypeOfFault getTypeOfFault() {
+    public Long getTypeOfFault() {
         return typeOfFault;
     }
 
-    public void setTypeOfFault(TypeOfFault typeOfFault) {
+    public void setTypeOfFault(Long typeOfFault) {
         this.typeOfFault = typeOfFault;
     }
 }

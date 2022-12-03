@@ -15,6 +15,9 @@ public class ConversionService {
         userDto.setEmail(user.getEmail());
         userDto.setJobPosition(user.getJobPosition());
         userDto.setRole(user.getRole());
+        userDto.setDeclarationOfTax(user.getDeclarationOfTax());
+        userDto.setHourRate(user.getHourRate());
+        userDto.setNumberOfChildren(user.getNumberOfChildren());
         if (user.getBranchOffice() != null) {
             BranchOfficeDto branchOfficeDto = new BranchOfficeDto();
             branchOfficeDto.setId(user.getBranchOffice().getId());
@@ -122,6 +125,10 @@ public class ConversionService {
         user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
         user.setJobPosition(userDto.getJobPosition());
+        user.setHourRate(userDto.getHourRate());
+        user.setNumberOfChildren(userDto.getNumberOfChildren());
+        user.setDeclarationOfTax(userDto.getDeclarationOfTax());
+
         role.ifPresent(user::setRole);
         return user;
     }
@@ -129,16 +136,28 @@ public class ConversionService {
     public static User convertToUser(UserDto userDto, User user, Optional<Role> role) {
         user.setUsername(userDto.getUsername());
         user.setEmail(userDto.getEmail());
+        user.setDeclarationOfTax(userDto.getDeclarationOfTax());
+        user.setHourRate(userDto.getHourRate());
+        user.setNumberOfChildren(user.getNumberOfChildren());
         user.setJobPosition(userDto.getJobPosition());
         role.ifPresent(user::setRole);
         return user;
     }
 
-    public static Fault convertToFault(FaultDto faultDto){
+    public static Fault convertToFault(FaultDto faultDto, Optional<TypeOfFault> typeOfFault){
         Fault fault= new Fault();
         fault.setDescription(faultDto.getDescription());
-        fault.setTypeOfFault(faultDto.getTypeOfFault());
+        typeOfFault.ifPresent(fault::setTypeOfFault);
         return fault;
+    }
+
+    public static Inspection convertToInspection(InspectionInDto inspectionInDto, User user) {
+        Inspection inspection = new Inspection();
+        inspection.setInspectionTime(inspectionInDto.getInspectionTime());
+        inspection.setDate(inspectionInDto.getDate());
+        inspection.setResult(inspectionInDto.getResult());
+        inspection.setUser(user);
+        return inspection;
     }
 
 //    public static OwnerDetailOutDto convertToOwnerDetailOutDto(Owner owner, Page<Car> carPage) {

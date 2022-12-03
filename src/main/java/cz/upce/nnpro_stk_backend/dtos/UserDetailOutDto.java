@@ -9,6 +9,35 @@ public class UserDetailOutDto {
     private String jobPosition;
     private Role role;
     private BranchOfficeDto branchOfficeDto;
+    private int hourRate;
+    //  @NotBlank(message = "declarationOfTax is mandatory.")
+    private boolean declarationOfTax;
+    //   @NotBlank(message = "Number of children is mandatory.")
+    private int numberOfChildren;
+
+    public int getHourRate() {
+        return hourRate;
+    }
+
+    public void setHourRate(int hourRate) {
+        this.hourRate = hourRate;
+    }
+
+    public boolean isDeclarationOfTax() {
+        return declarationOfTax;
+    }
+
+    public void setDeclarationOfTax(boolean declarationOfTax) {
+        this.declarationOfTax = declarationOfTax;
+    }
+
+    public int getNumberOfChildren() {
+        return numberOfChildren;
+    }
+
+    public void setNumberOfChildren(int numberOfChildren) {
+        this.numberOfChildren = numberOfChildren;
+    }
 
     public BranchOfficeDto getBranchOfficeDto() {
         return branchOfficeDto;

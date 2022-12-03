@@ -3,7 +3,7 @@ package cz.upce.nnpro_stk_backend.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Set;
 @Entity
@@ -13,16 +13,16 @@ public class Inspection {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @NotBlank(message = "inspectionTime is mandatory")
+    //@NotBlank(message = "inspectionTime is mandatory")
     private int inspectionTime;
     @OneToMany(mappedBy = "inspection", cascade = CascadeType.REMOVE)
-    private Set<FaultInspection>  faultInspections;
+    private Set<FaultOfInspection> faultOfInspections;
     @OneToMany(mappedBy = "inspection", cascade = CascadeType.REMOVE)
     private Set<Car> cars;
-    @NotBlank(message = "Date of inspection is mandatory")
+    @NotNull(message = "Date of inspection is mandatory")
     private LocalDate date;
-    @NotBlank(message = "Result of inspection is mandatory")
-    private char result;
+   // @NotBlank(message = "Result of inspection is mandatory")
+    private String result;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -45,11 +45,11 @@ public class Inspection {
         this.date = date;
     }
 
-    public char getResult() {
+    public String getResult() {
         return result;
     }
 
-    public void setResult(char result) {
+    public void setResult(String result) {
         this.result = result;
     }
 
@@ -69,12 +69,12 @@ public class Inspection {
         this.inspectionTime = inspectionTime;
     }
 
-   public Set<FaultInspection> getFaultInspections() {
-        return faultInspections;
+   public Set<FaultOfInspection> getFaultInspections() {
+        return faultOfInspections;
     }
 
-    public void setFaultInspections(Set<FaultInspection> faultInspections) {
-        this.faultInspections = faultInspections;
+    public void setFaultInspections(Set<FaultOfInspection> faultOfInspections) {
+        this.faultOfInspections = faultOfInspections;
     }
 
     public Set<Car> getCars() {

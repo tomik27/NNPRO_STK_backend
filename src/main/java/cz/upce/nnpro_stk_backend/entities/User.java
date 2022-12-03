@@ -24,9 +24,16 @@ public class User {
     private BranchOffice branchOffice;
     @OneToOne
     private Role role;
+    private int hourRate;
+  //  @NotBlank(message = "declarationOfTax is mandatory.")
+    private boolean declarationOfTax;
+ //   @NotBlank(message = "Number of children is mandatory.")
+    private int numberOfChildren;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<Inspection> inspections;
+
+
 
     public Set<Inspection> getInspections() {
         return inspections;
@@ -43,6 +50,7 @@ public class User {
     public void setBranchOffice(BranchOffice branchOffice) {
         this.branchOffice = branchOffice;
     }
+
 
 
     public Role getRole() {
@@ -91,5 +99,29 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getHourRate() {
+        return hourRate;
+    }
+
+    public void setHourRate(int hourRate) {
+        this.hourRate = hourRate;
+    }
+
+    public boolean getDeclarationOfTax() {
+        return declarationOfTax;
+    }
+
+    public void setDeclarationOfTax(boolean declarationOfTax) {
+        this.declarationOfTax = declarationOfTax;
+    }
+
+    public int getNumberOfChildren() {
+        return numberOfChildren;
+    }
+
+    public void setNumberOfChildren(int numberOfChildren) {
+        this.numberOfChildren = numberOfChildren;
     }
 }
