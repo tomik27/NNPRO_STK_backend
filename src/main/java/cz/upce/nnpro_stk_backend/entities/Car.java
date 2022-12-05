@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 
 @Entity
 public class Car {
@@ -15,6 +16,7 @@ public class Car {
     @NotBlank(message = "SPZ is mandatory.")
     private String spz;
     private String vin;
+    private LocalDate expiryDateOfSTK;
     @ManyToOne
     @JoinColumn(name = "inspection_id")
     @JsonIgnore
@@ -58,5 +60,13 @@ public class Car {
 
     public void setInspection(Inspection inspection) {
         this.inspection = inspection;
+    }
+
+    public LocalDate getExpiryDateOfSTK() {
+        return expiryDateOfSTK;
+    }
+
+    public void setExpiryDateOfSTK(LocalDate expiryDateOfSTK) {
+        this.expiryDateOfSTK = expiryDateOfSTK;
     }
 }

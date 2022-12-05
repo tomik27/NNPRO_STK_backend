@@ -6,12 +6,14 @@ import cz.upce.nnpro_stk_backend.entities.Inspection;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 
 public class CarDto {
     private String operable;
     @NotBlank(message = "SPZ is mandatory.")
     private String spz;
     private String vin;
+    private LocalDate expiryDateOfSTK;
     private Long inspectionId;
 
     public String getOperable() {
@@ -24,6 +26,14 @@ public class CarDto {
 
     public String getSpz() {
         return spz;
+    }
+
+    public LocalDate getExpiryDateOfSTK() {
+        return expiryDateOfSTK;
+    }
+
+    public void setExpiryDateOfSTK(LocalDate expiryDateOfSTK) {
+        this.expiryDateOfSTK = expiryDateOfSTK;
     }
 
     public void setSpz(String spz) {

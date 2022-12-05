@@ -18,6 +18,7 @@ public class ConversionService {
         userDto.setRole(user.getRole());
         userDto.setDeclarationOfTax(user.getDeclarationOfTax());
         userDto.setHourRate(user.getHourRate());
+        userDto.setPassword(user.getPassword());
         userDto.setNumberOfChildren(user.getNumberOfChildren());
         if (user.getBranchOffice() != null) {
             BranchOfficeDto branchOfficeDto = new BranchOfficeDto();
@@ -139,7 +140,7 @@ public class ConversionService {
         user.setEmail(userDto.getEmail());
         user.setDeclarationOfTax(userDto.getDeclarationOfTax());
         user.setHourRate(userDto.getHourRate());
-        user.setNumberOfChildren(user.getNumberOfChildren());
+        user.setNumberOfChildren(userDto.getNumberOfChildren());
         user.setJobPosition(userDto.getJobPosition());
         role.ifPresent(user::setRole);
         return user;
@@ -198,6 +199,7 @@ public class ConversionService {
         car.setSpz(carDto.getSpz());
         car.setVin(carDto.getVin());
         car.setInspection(inspection);
+        car.setExpiryDateOfSTK(carDto.getExpiryDateOfSTK());
         return car;
     }
 

@@ -6,6 +6,7 @@ public class UserDetailOutDto {
     private Long id;
     private String username;
     private String email;
+    private String password;
     private String jobPosition;
     private Role role;
     private BranchOfficeDto branchOfficeDto;
@@ -86,5 +87,13 @@ public class UserDetailOutDto {
 
     public void setJobPosition(String jobPosition) {
         this.jobPosition = jobPosition;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
