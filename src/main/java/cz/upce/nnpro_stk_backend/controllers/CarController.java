@@ -4,6 +4,7 @@ import cz.upce.nnpro_stk_backend.dtos.BranchOfficeInDto;
 import cz.upce.nnpro_stk_backend.dtos.CarDto;
 import cz.upce.nnpro_stk_backend.dtos.InspectionInDto;
 import cz.upce.nnpro_stk_backend.entities.BranchOffice;
+import cz.upce.nnpro_stk_backend.entities.Car;
 import cz.upce.nnpro_stk_backend.entities.Fault;
 import cz.upce.nnpro_stk_backend.entities.Inspection;
 import cz.upce.nnpro_stk_backend.services.CarService;
@@ -36,7 +37,7 @@ public class CarController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Inspection returned",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Inspection.class))}),
+                            schema = @Schema(implementation = Car.class))}),
             @ApiResponse(responseCode = "401", description = "unauthorized",
                     content = @Content),
             @ApiResponse(responseCode = "500", description = "Car not found",
@@ -50,7 +51,7 @@ public class CarController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Cars returned",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Inspection.class))}),
+                            schema = @Schema(implementation = Car.class))}),
             @ApiResponse(responseCode = "401", description = "unauthorized",
                     content = @Content)})
     @GetMapping("/getAllCars")
@@ -62,7 +63,7 @@ public class CarController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Car added",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Inspection.class))}),
+                            schema = @Schema(implementation = Car.class))}),
             @ApiResponse(responseCode = "401", description = "unauthorized",
                     content = @Content)})
     @PostMapping("/addCar")
@@ -74,7 +75,7 @@ public class CarController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Car removed and returned",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Fault.class))}),
+                            schema = @Schema(implementation = Car.class))}),
             @ApiResponse(responseCode = "401", description = "unauthorized",
                     content = @Content),
             @ApiResponse(responseCode = "500", description = "Car not found",
@@ -89,7 +90,7 @@ public class CarController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Car edited and returned",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = BranchOffice.class))}),
+                            schema = @Schema(implementation = Car.class))}),
             @ApiResponse(responseCode = "401", description = "unauthorized",
                     content = @Content),
             @ApiResponse(responseCode = "500", description = "Car not found",
@@ -98,6 +99,42 @@ public class CarController {
     @PutMapping("/editCar/{carId}")
     public ResponseEntity<?> editCar(@PathVariable Long carId, @RequestBody @Valid CarDto carDto) {
         return ResponseEntity.ok(carService.editCar(carId, carDto));
+    }
+
+    @Operation(summary = "Check if car is stolen by vin", description = "It has to have another app started (European register of stolen vehicles)")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Check went through. ",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = boolean.class))}),
+            @ApiResponse(responseCode = "401", description = "unauthorized",
+                    content = @Content)})
+    @GetMapping("/isCarStolenByVin/{vin}")
+    public ResponseEntity<?> isCarStolenByVin(@PathVariable String vin) {
+        return ResponseEntity.ok(carService.isCarStolenByVin(vin));
+    }
+
+    @Operation(summary = "Check if car is stolen by spz", description = "It has to have another app started (European register of stolen vehicles)")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Check went through. ",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = boolean.class))}),
+            @ApiResponse(responseCode = "401", description = "unauthorized",
+                    content = @Content)})
+    @GetMapping("/isCarStolenBySpz/{spz}")
+    public ResponseEntity<?> isCarStolenBySpz(@PathVariable String spz) {
+        return ResponseEntity.ok(carService.isCarStolenBySpz(spz));
+    }
+
+    @Operation(summary = "Check if car is stolen by spz", description = "It has to have another app started (European register of stolen vehicles)")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Check went through. ",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = boolean.class))}),
+            @ApiResponse(responseCode = "401", description = "unauthorized",
+                    content = @Content)})
+    @GetMapping("/getCarInfoFromCrvBySpz/{spz}")
+    public ResponseEntity<?> getCarInfoFromCrvBySpz(@PathVariable String spz) {
+        return ResponseEntity.ok(carService.getCarInfoFromCrvBySpz(spz));
     }
 
 }

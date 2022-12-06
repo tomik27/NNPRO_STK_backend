@@ -2,12 +2,10 @@ package cz.upce.nnpro_stk_backend.services;
 
 import cz.upce.nnpro_stk_backend.dtos.*;
 import cz.upce.nnpro_stk_backend.entities.*;
-import cz.upce.nnpro_stk_backend.repositories.FaultInspectionRepository;
-import cz.upce.nnpro_stk_backend.repositories.FaultRepository;
-import cz.upce.nnpro_stk_backend.repositories.InspectionRepository;
-import cz.upce.nnpro_stk_backend.repositories.UserRepository;
+import cz.upce.nnpro_stk_backend.repositories.*;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -18,17 +16,23 @@ public class InspectionService {
     private final UserRepository userRepository;
     private final FaultInspectionRepository faultInspectionRepository;
     private final FaultRepository faultRepository;
+    private final PdfService pdfService;
+    private final BranchOfficeRepository branchOfficeRepository;
 
-    public InspectionService(InspectionRepository inspectionRepository, UserRepository userRepository, FaultInspectionRepository faultInspectionRepository, FaultRepository faultRepository) {
+    public InspectionService(InspectionRepository inspectionRepository, UserRepository userRepository, FaultInspectionRepository faultInspectionRepository, FaultRepository faultRepository, PdfService pdfService, BranchOfficeRepository branchOfficeRepository) {
         this.inspectionRepository = inspectionRepository;
         this.userRepository = userRepository;
         this.faultInspectionRepository = faultInspectionRepository;
         this.faultRepository = faultRepository;
+        this.pdfService = pdfService;
+        this.branchOfficeRepository = branchOfficeRepository;
     }
 
     public Inspection addInspection(InspectionInDto inspectionInDto) {
         User user = userRepository.findById(inspectionInDto.getUser()).orElseThrow(() -> new NoSuchElementException("User not found!"));
-        Inspection inspection = ConversionService.convertToInspection(inspectionInDto, user);
+        BranchOffice branchOffice = branchOfficeRepository.findById(inspectionInDto.getBranchOffice()).orElseThrow(() -> new NoSuchElementException("Brnach not found!"));
+        Inspection inspection = ConversionService.convertToInspection(inspectionInDto, user,branchOffice);
+
         Inspection save = inspectionRepository.save(inspection);
         return save;
     }
@@ -64,13 +68,20 @@ public class InspectionService {
     public Inspection editInspection(Long inspectionId, InspectionInDto inspectionInDto) {
         inspectionRepository.findById(inspectionId).orElseThrow(() -> new NoSuchElementException("Inspection not found!"));
         User user = userRepository.findById(inspectionInDto.getUser()).orElseThrow(() -> new NoSuchElementException("User not found!"));
-        Inspection inspection = ConversionService.convertToInspection(inspectionInDto, user);
+        BranchOffice branchOffice = branchOfficeRepository.findById(inspectionInDto.getBranchOffice()).orElseThrow(() -> new NoSuchElementException("Branch not found!"));
+        Inspection inspection = ConversionService.convertToInspection(inspectionInDto, user, branchOffice);
         inspection.setId(inspectionId);
         Inspection save = inspectionRepository.save(inspection);
         return save;
     }
 
-    /*public Object removeFaultFromInspection(Long inspectionId, Long faultId) {
-        BranchOffice branchOffice = faultInspectionRepository.existsByF officeId).orElseThrow(() -> new NoSuchElementException("Branch office not found!"));
-    }*/
+    public ByteArrayInputStream getPDF(Long inspectionId) {
+      return  pdfService.createPdf();
+    }
+
+    public FaultOfInspection removeFaultFromInspection(Long inspectionId, Long faultId) {
+        FaultOfInspection faultOfInspection = faultInspectionRepository.existsByCarAndEndOfSignUpIsNull(inspectionId, faultId);
+        //todo dodělat pokud neexistuje error, pokud existuje smazat
+   return faultOfInspection;
+    }
 }

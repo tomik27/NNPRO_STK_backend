@@ -12,6 +12,15 @@ public class InspectionInDto {
     @NotBlank(message = "Result of inspection is mandatory")
     private String result;
     private Long user;
+    private Long branchOffice;
+
+    public Long getBranchOffice() {
+        return branchOffice;
+    }
+
+    public void setBranchOffice(Long branchOffice) {
+        this.branchOffice = branchOffice;
+    }
 
     public int getInspectionTime() {
         return inspectionTime;

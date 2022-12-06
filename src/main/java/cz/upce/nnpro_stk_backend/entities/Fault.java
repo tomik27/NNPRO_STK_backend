@@ -13,7 +13,6 @@ public class Fault {
     @OneToOne
     private TypeOfFault typeOfFault;
 
-
     @OneToMany(mappedBy = "fault", cascade = CascadeType.REMOVE)
     private Set<FaultOfInspection> faultOfInspection;
 
@@ -23,6 +22,14 @@ public class Fault {
 
     public void setFaultInspection(Set<FaultOfInspection> faultOfInspection) {
         this.faultOfInspection = faultOfInspection;
+    }
+
+    public Fault(String description, TypeOfFault typeOfFault) {
+        this.description = description;
+        this.typeOfFault = typeOfFault;
+    }
+
+    public Fault() {
     }
 
     public Long getId() {

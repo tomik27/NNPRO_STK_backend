@@ -75,6 +75,21 @@ public class BranchOfficeService {
         return detailOutDto;
     }
 
+   /* public UserDetailOutDto removeUserFromOffice(Long userId, Long branchId) {
+
+        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("User not found!"));
+        BranchOffice branchOffice = branchOfficeRepository.findById(branchId).orElseThrow(() -> new NoSuchElementException("Branch office not found!");
+
+        if(user.getBranchOffice().getId()!=branchOffice)
+
+                user.setBranchOffice(branchOfficeRepository.findById(branchOfficeIdUserIdDto.getBranchOfficeId()).orElseThrow(() -> new NoSuchElementException("Branch office not found!")));
+        User save = userRepository.save(user);
+        //todo: otestovat
+        //        UserDetailOutDto detailOutDto = ConversionService.convertToUserDetailOutDto(save);
+        UserDetailOutDto detailOutDto = modelMapper.map(save,UserDetailOutDto.class);
+        return detailOutDto;
+    }*/
+
     public List<BranchOffice> getAllOffices() {
         List<BranchOffice> branchOffices = branchOfficeRepository.findAll();
         return branchOffices;

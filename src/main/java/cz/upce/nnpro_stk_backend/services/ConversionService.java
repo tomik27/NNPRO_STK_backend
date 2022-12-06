@@ -160,9 +160,10 @@ public class ConversionService {
         return fault;
     }
 
-    public static Inspection convertToInspection(InspectionInDto inspectionInDto, User user) {
+    public static Inspection convertToInspection(InspectionInDto inspectionInDto, User user, BranchOffice branchOffice) {
         Inspection inspection = new Inspection();
         inspection.setInspectionTime(inspectionInDto.getInspectionTime());
+        inspection.setBranchOffice(branchOffice);
         inspection.setDate(inspectionInDto.getDate());
         inspection.setResult(inspectionInDto.getResult());
         inspection.setUser(user);

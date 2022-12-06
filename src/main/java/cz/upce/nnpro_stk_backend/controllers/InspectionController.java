@@ -14,11 +14,16 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.ByteArrayInputStream;
+import java.io.InputStreamReader;
 
 @RestController
 @RequestMapping("/inspection")
@@ -74,7 +79,7 @@ public class InspectionController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Car edited and returned",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = BranchOffice.class))}),
+                            schema = @Schema(implementation = Inspection.class))}),
             @ApiResponse(responseCode = "401", description = "unauthorized",
                     content = @Content),
             @ApiResponse(responseCode = "500", description = "Inspection not found",
@@ -89,7 +94,7 @@ public class InspectionController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Inspection removed and returned",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Fault.class))}),
+                            schema = @Schema(implementation = Inspection.class))}),
             @ApiResponse(responseCode = "401", description = "unauthorized",
                     content = @Content),
             @ApiResponse(responseCode = "500", description = "Inspection not found",
@@ -123,6 +128,27 @@ public class InspectionController {
     public ResponseEntity<?> removeFaultFromInspection(@PathVariable Long inspectionId,@PathVariable Long faultId) {
         return ResponseEntity.ok(inspectionService.removeFaultFromInspection(inspectionId,faultId));
     }*/
+
+
+    @Operation(summary = "Get PDF")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "PDF of inspection returned",
+                    content = {@Content(mediaType = "application/pdf",
+                            schema = @Schema(implementation = Inspection.class))}),
+            @ApiResponse(responseCode = "401", description = "unauthorized",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Inspection not found",
+                    content = @Content),})
+    @GetMapping(value="/getPDF/{inspectionId}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> getPDF(@PathVariable Long inspectionId) {
+        ByteArrayInputStream pdf = inspectionService.getPDF(inspectionId);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Content-Disposition","attachment; filename=report_id"+inspectionId+".pdf");
+        httpHeaders.add("Content-Type", "application/pdf");
+
+
+        return ResponseEntity.ok().headers(httpHeaders).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(pdf));
+    }
 
 
     /*@Operation(summary = "Get all faults in inspections ")

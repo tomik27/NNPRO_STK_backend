@@ -68,11 +68,42 @@ public class FaultService {
 
     @PostConstruct
     public void init() {
+        TypeOfFault lehka   =  new TypeOfFault( "Lehká závada","A");
+        TypeOfFault tezka   =  new TypeOfFault( "Těžká závada","B");
+        TypeOfFault nebezpecna  = new TypeOfFault( "Nebezpečná závada","C");
+
+
         if (typeOfFaultRepository.count() != 3) {
             typeOfFaultRepository.deleteAll();
-            typeOfFaultRepository.save(new TypeOfFault( "Lehká závada","A"));
-            typeOfFaultRepository.save(new TypeOfFault( "Těžká závada","B"));
-            typeOfFaultRepository.save(new TypeOfFault( "Nebezpečná závada","C"));
+            typeOfFaultRepository.save(lehka);
+            typeOfFaultRepository.save(tezka);
+            typeOfFaultRepository.save(nebezpecna);
+        }
+        TypeOfFault A = typeOfFaultRepository.findById(1L).orElseThrow(() -> new NoSuchElementException("TypeOfFault not found!"));
+        TypeOfFault B = typeOfFaultRepository.findById(2L).orElseThrow(() -> new NoSuchElementException("TypeOfFault not found!"));
+        TypeOfFault C = typeOfFaultRepository.findById(3L).orElseThrow(() -> new NoSuchElementException("TypeOfFault not found!"));
+
+        if (faultRepository.count() != 15) {
+            faultRepository.deleteAll();
+            faultRepository.save(new Fault("brzdy",A));
+            faultRepository.save(new Fault("geometrie",A));
+            faultRepository.save(new Fault("osvětlení",A));
+            faultRepository.save(new Fault("kola",A));
+            faultRepository.save(new Fault("karoserie",A));
+
+            faultRepository.save(new Fault("brzdy",B));
+            faultRepository.save(new Fault("geometrie",B));
+            faultRepository.save(new Fault("osvětlení",B));
+            faultRepository.save(new Fault("kola",B));
+            faultRepository.save(new Fault("karoserie",B));
+
+            faultRepository.save(new Fault("brzdy",C));
+            faultRepository.save(new Fault("geometrie",C));
+            faultRepository.save(new Fault("osvětlení",C));
+            faultRepository.save(new Fault("kola",C));
+            faultRepository.save(new Fault("karoserie",C));
+
+
         }
     }
 }

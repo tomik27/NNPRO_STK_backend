@@ -75,7 +75,7 @@ public class FaultController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Car edited and returned",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = BranchOffice.class))}),
+                            schema = @Schema(implementation = Fault.class))}),
             @ApiResponse(responseCode = "401", description = "unauthorized",
                     content = @Content),
             @ApiResponse(responseCode = "500", description = "Fault not found",
@@ -101,14 +101,14 @@ public class FaultController {
         return ResponseEntity.ok(faultService.removeFault(faultId));
     }
 
-    @Operation(summary = "Get all roles")
+    @Operation(summary = "Get all Faults")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Roles returned (List<Role>)",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = Role.class))}),
             @ApiResponse(responseCode = "401", description = "unauthorized",
                     content = @Content),
-            @ApiResponse(responseCode = "500", description = "User not found",
+            @ApiResponse(responseCode = "500", description = "Fault not found",
                     content = @Content),})
     @SecurityRequirement(name = "NNPRO_API")
     @GetMapping("/getAllTypeOfFaults")

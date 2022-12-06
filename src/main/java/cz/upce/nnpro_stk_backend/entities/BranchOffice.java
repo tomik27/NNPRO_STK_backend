@@ -20,6 +20,17 @@ public class BranchOffice {
     @OneToMany(mappedBy = "branchOffice", cascade = CascadeType.REMOVE)
     private Set<User> users;
 
+    @OneToMany(mappedBy = "branchOffice", cascade = CascadeType.REMOVE)
+    private Set<Inspection> inspections;
+
+    public Set<Inspection> getInspections() {
+        return inspections;
+    }
+
+    public void setInspections(Set<Inspection> inspections) {
+        this.inspections = inspections;
+    }
+
     public String getCity() {
         return city;
     }

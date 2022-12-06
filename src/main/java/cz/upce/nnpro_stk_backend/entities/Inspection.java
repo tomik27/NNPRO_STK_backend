@@ -29,6 +29,27 @@ public class Inspection {
     @JsonIgnore
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "branchOffice_id")
+    @JsonIgnore
+    private BranchOffice branchOffice;
+
+    public Set<FaultOfInspection> getFaultOfInspections() {
+        return faultOfInspections;
+    }
+
+    public void setFaultOfInspections(Set<FaultOfInspection> faultOfInspections) {
+        this.faultOfInspections = faultOfInspections;
+    }
+
+    public BranchOffice getBranchOffice() {
+        return branchOffice;
+    }
+
+    public void setBranchOffice(BranchOffice branchOffice) {
+        this.branchOffice = branchOffice;
+    }
+
     public User getUser() {
         return user;
     }
