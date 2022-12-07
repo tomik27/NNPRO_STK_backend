@@ -1,4 +1,4 @@
-package cz.upce.nnpro_stk_backend.entities;
+package cz.upce.nnpro_stk_backend.dtos;
 
 import java.time.LocalDate;
 import java.util.List;

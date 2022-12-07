@@ -3,18 +3,16 @@ package cz.upce.nnpro_stk_backend.services;
 import cz.upce.nnpro_stk_backend.dtos.CarDetailOutDto;
 import cz.upce.nnpro_stk_backend.dtos.CarDto;
 import cz.upce.nnpro_stk_backend.entities.Car;
-import cz.upce.nnpro_stk_backend.entities.CarFromCrvDto;
-import cz.upce.nnpro_stk_backend.entities.Fault;
+import cz.upce.nnpro_stk_backend.dtos.CarFromCrvDto;
 import cz.upce.nnpro_stk_backend.entities.Inspection;
 import cz.upce.nnpro_stk_backend.repositories.CarRepository;
 import cz.upce.nnpro_stk_backend.repositories.InspectionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
+
 @Service
 public class CarService {
     private final CarRepository carRepository;

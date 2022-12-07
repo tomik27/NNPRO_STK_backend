@@ -165,7 +165,6 @@ public class ConversionService {
         inspection.setInspectionTime(inspectionInDto.getInspectionTime());
         inspection.setBranchOffice(branchOffice);
         inspection.setDate(inspectionInDto.getDate());
-        inspection.setResult(inspectionInDto.getResult());
         inspection.setUser(user);
         return inspection;
     }
@@ -189,7 +188,6 @@ public class ConversionService {
         inspectionOutDto.setInspectionTime(inspection.getInspectionTime());
         inspectionOutDto.setFaultsOfInspectionList(faultOfInspectionDtos);
         inspectionOutDto.setDate(inspection.getDate());
-        inspectionOutDto.setResult(inspection.getResult());
         inspectionOutDto.setDate(inspection.getDate());
         return inspectionOutDto;
     }

@@ -22,7 +22,6 @@ public class Inspection {
     @NotNull(message = "Date of inspection is mandatory")
     private LocalDate date;
    // @NotBlank(message = "Result of inspection is mandatory")
-    private String result;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -66,13 +65,6 @@ public class Inspection {
         this.date = date;
     }
 
-    public String getResult() {
-        return result;
-    }
-
-    public void setResult(String result) {
-        this.result = result;
-    }
 
     public Long getId() {
         return id;

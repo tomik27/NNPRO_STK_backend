@@ -1,10 +1,12 @@
 package cz.upce.nnpro_stk_backend.controllers;
 
 import cz.upce.nnpro_stk_backend.dtos.CarDto;
+import cz.upce.nnpro_stk_backend.dtos.FaultOfInspectionInDto;
 import cz.upce.nnpro_stk_backend.dtos.InspectionFaultsOutDto;
 import cz.upce.nnpro_stk_backend.dtos.InspectionInDto;
 import cz.upce.nnpro_stk_backend.entities.BranchOffice;
 import cz.upce.nnpro_stk_backend.entities.Fault;
+import cz.upce.nnpro_stk_backend.entities.FaultOfInspection;
 import cz.upce.nnpro_stk_backend.entities.Inspection;
 import cz.upce.nnpro_stk_backend.services.InspectionService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -117,17 +119,19 @@ public class InspectionController {
         return ResponseEntity.ok(inspectionService.addFaultToInspection(faultOfInspectionDto));
     }
 
-    /*@Operation(summary = "Remove fault from inspection")
+    @Operation(summary = "Remove fault from inspection")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Inspection fault removed",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Inspection.class))}),
+                            schema = @Schema(implementation = FaultOfInspection.class))}),
             @ApiResponse(responseCode = "401", description = "unauthorized",
-                    content = @Content)})
-    @PostMapping("/removeFaultFromInspection")
-    public ResponseEntity<?> removeFaultFromInspection(@PathVariable Long inspectionId,@PathVariable Long faultId) {
-        return ResponseEntity.ok(inspectionService.removeFaultFromInspection(inspectionId,faultId));
-    }*/
+                    content = @Content),
+    @ApiResponse(responseCode = "500", description = "Inspection or fault not found",
+            content = @Content),})
+    @DeleteMapping("/removeFaultFromInspection")
+    public ResponseEntity<?> removeFaultFromInspection(@RequestBody @Valid FaultOfInspectionInDto faultOfInspectionInDto) {
+        return ResponseEntity.ok(inspectionService.removeFaultFromInspection(faultOfInspectionInDto));
+    }
 
 
     @Operation(summary = "Get PDF")

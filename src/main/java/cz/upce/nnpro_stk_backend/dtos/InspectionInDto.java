@@ -9,8 +9,6 @@ public class InspectionInDto {
     private int inspectionTime;
     @NotNull(message = "Date of inspection is mandatory")
     private LocalDate date;
-    @NotBlank(message = "Result of inspection is mandatory")
-    private String result;
     private Long user;
     private Long branchOffice;
 
@@ -38,13 +36,6 @@ public class InspectionInDto {
         this.date = date;
     }
 
-    public String getResult() {
-        return result;
-    }
-
-    public void setResult(String result) {
-        this.result = result;
-    }
 
     public Long getUser() {
         return user;

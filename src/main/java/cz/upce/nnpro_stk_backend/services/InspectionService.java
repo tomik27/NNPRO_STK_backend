@@ -79,9 +79,12 @@ public class InspectionService {
       return  pdfService.createPdf();
     }
 
-    public FaultOfInspection removeFaultFromInspection(Long inspectionId, Long faultId) {
-        FaultOfInspection faultOfInspection = faultInspectionRepository.existsByCarAndEndOfSignUpIsNull(inspectionId, faultId);
-        //todo dodělat pokud neexistuje error, pokud existuje smazat
+    public FaultOfInspection removeFaultFromInspection(FaultOfInspectionInDto faultOfInspectionInDto) {
+        FaultOfInspection faultOfInspection = faultInspectionRepository.existsByInspectionAndFault(faultOfInspectionInDto.getInspection(), faultOfInspectionInDto.getFault());
+                if(faultOfInspection==null)
+      throw  new NoSuchElementException("Fault in Inspection not found!");
+
+        faultInspectionRepository.delete(faultOfInspection);
    return faultOfInspection;
     }
 }
