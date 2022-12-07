@@ -17,6 +17,7 @@ public class Car {
     private String spz;
     private String vin;
     private LocalDate expiryDateOfSTK;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "inspection_id")
     private Inspection inspection;
