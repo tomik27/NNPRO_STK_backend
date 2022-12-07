@@ -1,9 +1,6 @@
 package cz.upce.nnpro_stk_backend.controllers;
 
-import cz.upce.nnpro_stk_backend.dtos.CarDto;
-import cz.upce.nnpro_stk_backend.dtos.FaultOfInspectionInDto;
-import cz.upce.nnpro_stk_backend.dtos.InspectionFaultsOutDto;
-import cz.upce.nnpro_stk_backend.dtos.InspectionInDto;
+import cz.upce.nnpro_stk_backend.dtos.*;
 import cz.upce.nnpro_stk_backend.entities.BranchOffice;
 import cz.upce.nnpro_stk_backend.entities.Fault;
 import cz.upce.nnpro_stk_backend.entities.FaultOfInspection;
@@ -75,6 +72,18 @@ public class InspectionController {
     @PostMapping("/addInspection")
     public ResponseEntity<?> addInspection(@RequestBody @Valid InspectionInDto inspectionInDto) {
         return ResponseEntity.ok(inspectionService.addInspection(inspectionInDto));
+    }
+
+    @Operation(summary = "Add inspection")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Inspection added",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Inspection.class))}),
+            @ApiResponse(responseCode = "401", description = "unauthorized",
+                    content = @Content)})
+    @PostMapping("/addInspectionWithFaults")
+    public ResponseEntity<?> addInspectionWithFaults(@RequestBody @Valid InspectionWithFaultsInDto inspectionInDto) {
+        return ResponseEntity.ok(inspectionService.addInspectionWithFaults(inspectionInDto));
     }
 
     @Operation(summary = "Edit inspection")

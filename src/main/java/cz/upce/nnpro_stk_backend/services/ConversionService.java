@@ -202,6 +202,15 @@ public class ConversionService {
         return car;
     }
 
+    public static Inspection convertToInspectionWithFaults(InspectionWithFaultsInDto inspectionInDto, User user, BranchOffice branchOffice) {
+        Inspection inspection = new Inspection();
+        inspection.setInspectionTime(inspectionInDto.getInspectionTime());
+        inspection.setBranchOffice(branchOffice);
+        inspection.setDate(inspectionInDto.getDate());
+        inspection.setUser(user);
+        return inspection;
+    }
+
 //    public static OwnerDetailOutDto convertToOwnerDetailOutDto(Owner owner, Page<Car> carPage) {
 //        OwnerDetailOutDto ownerDetailOutDto = new OwnerDetailOutDto();
 //        ownerDetailOutDto.setId(owner.getId());

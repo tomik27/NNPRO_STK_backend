@@ -87,4 +87,30 @@ public class InspectionService {
         faultInspectionRepository.delete(faultOfInspection);
    return faultOfInspection;
     }
+
+
+    public Inspection addInspectionWithFaults(InspectionWithFaultsInDto inspectionInDto) {
+        User user = userRepository.findById(inspectionInDto.getUser()).orElseThrow(() -> new NoSuchElementException("User not found!"));
+        BranchOffice branchOffice = branchOfficeRepository.findById(inspectionInDto.getBranchOffice()).orElseThrow(() -> new NoSuchElementException("Brnach not found!"));
+        Inspection inspection = ConversionService.convertToInspectionWithFaults(inspectionInDto, user,branchOffice);
+
+        Inspection saveInspection = inspectionRepository.save(inspection);
+        addFaultToInspection(inspectionInDto.getBodyFault(),inspection.getId());
+        addFaultToInspection(inspectionInDto.getBrakesFault(),inspection.getId());
+        addFaultToInspection(inspectionInDto.getGeometryFault(),inspection.getId());
+        addFaultToInspection(inspectionInDto.getWheelFault(),inspection.getId());
+        addFaultToInspection(inspectionInDto.getLightningFault(),inspection.getId());
+        return saveInspection;
+    }
+
+    private FaultOfInspection addFaultToInspection(Long faultId,Long inspectionId) {
+        Inspection inspection = inspectionRepository.findById(inspectionId).orElseThrow(() -> new NoSuchElementException("Inspection not found!"));
+        Fault fault = faultRepository.findById(faultId).orElseThrow(() -> new NoSuchElementException("Fault not found!"));
+
+        FaultOfInspection faultOfInspection =new FaultOfInspection();
+        faultOfInspection.setInspection(inspection);
+        faultOfInspection.setFault(fault);
+        FaultOfInspection save = faultInspectionRepository.save(faultOfInspection);
+        return save;
+    }
 }
