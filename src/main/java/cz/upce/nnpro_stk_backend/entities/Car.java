@@ -19,7 +19,6 @@ public class Car {
     private LocalDate expiryDateOfSTK;
     @ManyToOne
     @JoinColumn(name = "inspection_id")
-    @JsonIgnore
     private Inspection inspection;
 
     public Long getId() {
