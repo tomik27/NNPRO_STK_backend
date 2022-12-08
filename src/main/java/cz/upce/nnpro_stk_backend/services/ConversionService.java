@@ -9,6 +9,7 @@ public class ConversionService {
     public static UserDetailOutDto convertToUserDetailOutDto(User user) {
         UserDetailOutDto userDto = new UserDetailOutDto();
         userDto.setId(user.getId());
+        userDto.setInspections(user.getInspections());
         userDto.setUsername(user.getUsername());
         userDto.setEmail(user.getEmail());
         userDto.setJobPosition(user.getJobPosition());

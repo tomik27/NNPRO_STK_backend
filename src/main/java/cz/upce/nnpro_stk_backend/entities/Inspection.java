@@ -13,18 +13,17 @@ public class Inspection {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    //@NotBlank(message = "inspectionTime is mandatory")
     private int inspectionTime;
+    @NotNull(message = "Date of inspection is mandatory")
+    private LocalDate date;
+
     @OneToMany(mappedBy = "inspection", cascade = CascadeType.REMOVE)
     private Set<FaultOfInspection> faultOfInspections;
-    /*@OneToMany(mappedBy = "inspection", cascade = CascadeType.REMOVE)
-    private Set<Car> cars;*/
+
     @ManyToOne
     @JoinColumn(name = "car_id")
     private Car car;
-    @NotNull(message = "Date of inspection is mandatory")
-    private LocalDate date;
-   // @NotBlank(message = "Result of inspection is mandatory")
+
 
     @ManyToOne
     @JoinColumn(name = "user_id")

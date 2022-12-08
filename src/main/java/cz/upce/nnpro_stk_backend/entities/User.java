@@ -29,7 +29,6 @@ public class User {
     private boolean declarationOfTax;
  //   @NotBlank(message = "Number of children is mandatory.")
     private int numberOfChildren;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<Inspection> inspections;
 

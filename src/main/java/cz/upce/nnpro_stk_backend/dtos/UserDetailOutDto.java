@@ -1,6 +1,9 @@
 package cz.upce.nnpro_stk_backend.dtos;
 
+import cz.upce.nnpro_stk_backend.entities.Inspection;
 import cz.upce.nnpro_stk_backend.entities.Role;
+
+import java.util.Set;
 
 public class UserDetailOutDto {
     private Long id;
@@ -10,11 +13,20 @@ public class UserDetailOutDto {
     private String jobPosition;
     private Role role;
     private BranchOfficeDto branchOfficeDto;
+    private Set<Inspection> inspections;
     private int hourRate;
     //  @NotBlank(message = "declarationOfTax is mandatory.")
     private boolean declarationOfTax;
     //   @NotBlank(message = "Number of children is mandatory.")
     private int numberOfChildren;
+
+    public Set<Inspection> getInspections() {
+        return inspections;
+    }
+
+    public void setInspections(Set<Inspection> inspections) {
+        this.inspections = inspections;
+    }
 
     public int getHourRate() {
         return hourRate;
