@@ -3,10 +3,7 @@ package cz.upce.nnpro_stk_backend.services;
 import cz.upce.nnpro_stk_backend.entities.*;
 import cz.upce.nnpro_stk_backend.dtos.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 public class ConversionService {
     public static UserDetailOutDto convertToUserDetailOutDto(User user) {
@@ -192,21 +189,23 @@ public class ConversionService {
         return inspectionOutDto;
     }
 
-    public static Car convertToCar(CarDto carDto, Inspection inspection) {
+    public static Car convertToCar(CarDto carDto) {
         Car car = new Car();
         car.setOperable(carDto.getOperable());
         car.setSpz(carDto.getSpz());
         car.setVin(carDto.getVin());
-        car.setInspection(inspection);
+     /*   Set<Inspection> inspections =new HashSet<>(Arrays.asList(inspection));
+        car.setInspections(inspections);*/
         car.setExpiryDateOfSTK(carDto.getExpiryDateOfSTK());
         return car;
     }
 
-    public static Inspection convertToInspectionWithFaults(InspectionWithFaultsInDto inspectionInDto, User user, BranchOffice branchOffice) {
+    public static Inspection convertToInspectionWithFaults(InspectionWithFaultsInDto inspectionInDto, User user, BranchOffice branchOffice,Car car) {
         Inspection inspection = new Inspection();
         inspection.setInspectionTime(inspectionInDto.getInspectionTime());
         inspection.setBranchOffice(branchOffice);
         inspection.setDate(inspectionInDto.getDate());
+        inspection.setCar(car);
         inspection.setUser(user);
         return inspection;
     }

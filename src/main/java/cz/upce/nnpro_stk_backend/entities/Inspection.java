@@ -17,8 +17,11 @@ public class Inspection {
     private int inspectionTime;
     @OneToMany(mappedBy = "inspection", cascade = CascadeType.REMOVE)
     private Set<FaultOfInspection> faultOfInspections;
-    @OneToMany(mappedBy = "inspection", cascade = CascadeType.REMOVE)
-    private Set<Car> cars;
+    /*@OneToMany(mappedBy = "inspection", cascade = CascadeType.REMOVE)
+    private Set<Car> cars;*/
+    @ManyToOne
+    @JoinColumn(name = "car_id")
+    private Car car;
     @NotNull(message = "Date of inspection is mandatory")
     private LocalDate date;
    // @NotBlank(message = "Result of inspection is mandatory")
@@ -90,11 +93,11 @@ public class Inspection {
         this.faultOfInspections = faultOfInspections;
     }
 
-    public Set<Car> getCars() {
-        return cars;
+    public Car getCar() {
+        return car;
     }
 
-    public void setCars(Set<Car> cars) {
-        this.cars = cars;
+    public void setCar(Car car) {
+        this.car = car;
     }
 }

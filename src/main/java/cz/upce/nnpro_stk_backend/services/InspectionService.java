@@ -16,14 +16,16 @@ public class InspectionService {
     private final UserRepository userRepository;
     private final FaultInspectionRepository faultInspectionRepository;
     private final FaultRepository faultRepository;
+    private final CarRepository carRepository;
     private final PdfService pdfService;
     private final BranchOfficeRepository branchOfficeRepository;
 
-    public InspectionService(InspectionRepository inspectionRepository, UserRepository userRepository, FaultInspectionRepository faultInspectionRepository, FaultRepository faultRepository, PdfService pdfService, BranchOfficeRepository branchOfficeRepository) {
+    public InspectionService(InspectionRepository inspectionRepository, UserRepository userRepository, FaultInspectionRepository faultInspectionRepository, FaultRepository faultRepository, CarRepository carRepository, PdfService pdfService, BranchOfficeRepository branchOfficeRepository) {
         this.inspectionRepository = inspectionRepository;
         this.userRepository = userRepository;
         this.faultInspectionRepository = faultInspectionRepository;
         this.faultRepository = faultRepository;
+        this.carRepository = carRepository;
         this.pdfService = pdfService;
         this.branchOfficeRepository = branchOfficeRepository;
     }
@@ -31,7 +33,10 @@ public class InspectionService {
     public Inspection addInspection(InspectionInDto inspectionInDto) {
         User user = userRepository.findById(inspectionInDto.getUser()).orElseThrow(() -> new NoSuchElementException("User not found!"));
         BranchOffice branchOffice = branchOfficeRepository.findById(inspectionInDto.getBranchOffice()).orElseThrow(() -> new NoSuchElementException("Brnach not found!"));
+        //BranchOffice car = carRepository.findById(inspectionInDto.getBranchOffice()).orElseThrow(() -> new NoSuchElementException("Brnach not found!"));
+
         Inspection inspection = ConversionService.convertToInspection(inspectionInDto, user,branchOffice);
+
 
         Inspection save = inspectionRepository.save(inspection);
         return save;
@@ -76,7 +81,9 @@ public class InspectionService {
     }
 
     public ByteArrayInputStream getPDF(Long inspectionId) {
-      return  pdfService.createPdf();
+        Inspection inspection = inspectionRepository.findById(inspectionId).orElseThrow(() -> new NoSuchElementException("Inspection not found!"));
+
+        return  pdfService.createPdf2(inspection);
     }
 
     public FaultOfInspection removeFaultFromInspection(FaultOfInspectionInDto faultOfInspectionInDto) {
@@ -92,7 +99,8 @@ public class InspectionService {
     public Inspection addInspectionWithFaults(InspectionWithFaultsInDto inspectionInDto) {
         User user = userRepository.findById(inspectionInDto.getUser()).orElseThrow(() -> new NoSuchElementException("User not found!"));
         BranchOffice branchOffice = branchOfficeRepository.findById(inspectionInDto.getBranchOffice()).orElseThrow(() -> new NoSuchElementException("Brnach not found!"));
-        Inspection inspection = ConversionService.convertToInspectionWithFaults(inspectionInDto, user,branchOffice);
+        Car car = carRepository.findById(inspectionInDto.getCar()).orElseThrow(() -> new NoSuchElementException("Car not found!"));
+        Inspection inspection = ConversionService.convertToInspectionWithFaults(inspectionInDto, user,branchOffice,car);
 
         Inspection saveInspection = inspectionRepository.save(inspection);
         addFaultToInspection(inspectionInDto.getBodyFault(),inspection.getId());

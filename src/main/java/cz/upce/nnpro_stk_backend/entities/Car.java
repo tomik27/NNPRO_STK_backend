@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 public class Car {
@@ -17,10 +18,13 @@ public class Car {
     private String spz;
     private String vin;
     private LocalDate expiryDateOfSTK;
-    @JsonIgnore
-    @ManyToOne
+
+    /*@ManyToOne
     @JoinColumn(name = "inspection_id")
-    private Inspection inspection;
+    private Inspection inspection;*/
+    @JsonIgnore
+    @OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE)
+    private Set<Inspection> inspections;
 
     public Long getId() {
         return id;
@@ -54,12 +58,12 @@ public class Car {
         this.vin = vin;
     }
 
-    public Inspection getInspection() {
-        return inspection;
+    public Set<Inspection> getInspections() {
+        return inspections;
     }
 
-    public void setInspection(Inspection inspection) {
-        this.inspection = inspection;
+    public void setInspections(Set<Inspection> inspections) {
+        this.inspections = inspections;
     }
 
     public LocalDate getExpiryDateOfSTK() {

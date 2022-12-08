@@ -23,8 +23,7 @@ public class CarService {
     }
 
     public Car addCar(CarDto carDto){
-        Inspection inspection = inspectionRepository.findById(carDto.getInspectionId()).orElseThrow(() -> new NoSuchElementException("Inspection not found!"));
-        Car car = ConversionService.convertToCar(carDto,inspection);
+        Car car = ConversionService.convertToCar(carDto);
         Car save = carRepository.save(car);
         return save;
     }
@@ -47,8 +46,7 @@ public class CarService {
 
     public Car editCar(Long carId, CarDto carDto) {
         carRepository.findById(carId).orElseThrow(() -> new NoSuchElementException("Car not found!"));
-        Inspection inspection = inspectionRepository.findById(carDto.getInspectionId()).orElseThrow(() -> new NoSuchElementException("Inspection not found!"));
-        Car car = ConversionService.convertToCar(carDto, inspection);
+        Car car = ConversionService.convertToCar(carDto);
         car.setId(carId);
         Car save = carRepository.save(car);
         return save;

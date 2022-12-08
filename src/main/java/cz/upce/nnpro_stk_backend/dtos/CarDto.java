@@ -14,7 +14,6 @@ public class CarDto {
     private String spz;
     private String vin;
     private LocalDate expiryDateOfSTK;
-    private Long inspectionId;
 
     public String getOperable() {
         return operable;
@@ -48,11 +47,4 @@ public class CarDto {
         this.vin = vin;
     }
 
-    public Long getInspectionId() {
-        return inspectionId;
-    }
-
-    public void setInspectionId(Long inspectionId) {
-        this.inspectionId = inspectionId;
-    }
 }

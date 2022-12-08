@@ -8,6 +8,7 @@ public class InspectionWithFaultsInDto {
     private int inspectionTime;
     @NotNull(message = "Date of inspection is mandatory")
     private LocalDate date;
+    private Long car;
     private Long user;
     private Long branchOffice;
     private Long geometryFault;
@@ -15,6 +16,15 @@ public class InspectionWithFaultsInDto {
     private Long wheelFault;
     private Long bodyFault;
     private Long brakesFault;
+
+
+    public Long getCar() {
+        return car;
+    }
+
+    public void setCar(Long car) {
+        this.car = car;
+    }
 
     public Long getBranchOffice() {
         return branchOffice;
