@@ -2,6 +2,7 @@ package cz.upce.nnpro_stk_backend.controllers;
 
 import cz.upce.nnpro_stk_backend.dtos.BranchOfficeInDto;
 import cz.upce.nnpro_stk_backend.dtos.CarDto;
+import cz.upce.nnpro_stk_backend.dtos.CarOutDto;
 import cz.upce.nnpro_stk_backend.dtos.InspectionInDto;
 import cz.upce.nnpro_stk_backend.entities.BranchOffice;
 import cz.upce.nnpro_stk_backend.entities.Car;
@@ -37,7 +38,7 @@ public class CarController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Inspection returned",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Car.class))}),
+                            schema = @Schema(implementation = CarOutDto.class))}),
             @ApiResponse(responseCode = "401", description = "unauthorized",
                     content = @Content),
             @ApiResponse(responseCode = "500", description = "Car not found",

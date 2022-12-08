@@ -22,7 +22,7 @@ public class Car {
     /*@ManyToOne
     @JoinColumn(name = "inspection_id")
     private Inspection inspection;*/
-    @JsonIgnore
+
     @OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE)
     private Set<Inspection> inspections;
 

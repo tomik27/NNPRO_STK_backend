@@ -1,5 +1,7 @@
 package cz.upce.nnpro_stk_backend.dtos;
 
+import cz.upce.nnpro_stk_backend.entities.BranchOffice;
+import cz.upce.nnpro_stk_backend.entities.Car;
 import cz.upce.nnpro_stk_backend.entities.Fault;
 import cz.upce.nnpro_stk_backend.entities.FaultOfInspection;
 
@@ -9,13 +11,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class InspectionOutDto {
-    private long Id;
    // @NotBlank(message = "inspectionTime is mandatory")
     private int inspectionTime;
     @NotNull(message = "Date of inspection is mandatory")
     private LocalDate date;
     @NotBlank(message = "Result of inspection is mandatory")
-    private Long user;
+    private UserDto userDto;
+    private BranchOfficeDto branchDto;
+
+    private CarDto carDto;
 
     private List<FaultOfInspectionDto> faultsOfInspectionList;
 
@@ -36,20 +40,28 @@ public class InspectionOutDto {
         this.date = date;
     }
 
-    public Long getUser() {
-        return user;
+    public UserDto getUserDto() {
+        return userDto;
     }
 
-    public void setUser(Long user) {
-        this.user = user;
+    public void setUserDto(UserDto userDto) {
+        this.userDto = userDto;
     }
 
-    public long getId() {
-        return Id;
+    public BranchOfficeDto getBranchDto() {
+        return branchDto;
     }
 
-    public void setId(long id) {
-        Id = id;
+    public void setBranchDto(BranchOfficeDto branchDto) {
+        this.branchDto = branchDto;
+    }
+
+    public CarDto getCarDto() {
+        return carDto;
+    }
+
+    public void setCarDto(CarDto carDto) {
+        this.carDto = carDto;
     }
 
     public List<FaultOfInspectionDto> getFaultsOfInspectionList() {

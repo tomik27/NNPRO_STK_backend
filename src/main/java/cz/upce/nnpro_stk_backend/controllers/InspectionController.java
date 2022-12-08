@@ -40,7 +40,7 @@ public class InspectionController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Inspection returned",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Inspection.class))}),
+                            schema = @Schema(implementation = InspectionOutDto.class))}),
             @ApiResponse(responseCode = "401", description = "unauthorized",
                     content = @Content),
             @ApiResponse(responseCode = "500", description = "Inspection not found",

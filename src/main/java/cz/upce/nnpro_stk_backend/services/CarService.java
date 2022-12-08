@@ -2,9 +2,9 @@ package cz.upce.nnpro_stk_backend.services;
 
 import cz.upce.nnpro_stk_backend.dtos.CarDetailOutDto;
 import cz.upce.nnpro_stk_backend.dtos.CarDto;
+import cz.upce.nnpro_stk_backend.dtos.InspectionDto;
 import cz.upce.nnpro_stk_backend.entities.Car;
 import cz.upce.nnpro_stk_backend.dtos.CarFromCrvDto;
-import cz.upce.nnpro_stk_backend.entities.Inspection;
 import cz.upce.nnpro_stk_backend.repositories.CarRepository;
 import cz.upce.nnpro_stk_backend.repositories.InspectionRepository;
 import org.springframework.stereotype.Service;

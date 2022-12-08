@@ -20,6 +20,7 @@ public class Inspection {
     @OneToMany(mappedBy = "inspection", cascade = CascadeType.REMOVE)
     private Set<FaultOfInspection> faultOfInspections;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "car_id")
     private Car car;

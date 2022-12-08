@@ -187,6 +187,34 @@ public class ConversionService {
         inspectionOutDto.setFaultsOfInspectionList(faultOfInspectionDtos);
         inspectionOutDto.setDate(inspection.getDate());
         inspectionOutDto.setDate(inspection.getDate());
+
+        if (inspection.getBranchOffice() != null) {
+            BranchOfficeDto branchOfficeDto = new BranchOfficeDto();
+            branchOfficeDto.setId(inspection.getBranchOffice().getId());
+            branchOfficeDto.setRegion(inspection.getBranchOffice().getRegion());
+            branchOfficeDto.setDistrict(inspection.getBranchOffice().getDistrict());
+            branchOfficeDto.setCity(inspection.getBranchOffice().getCity());
+            inspectionOutDto.setBranchDto(branchOfficeDto);
+        }
+        if(inspection.getUser()!=null){
+            UserDto userDto = new UserDto();
+            userDto.setDeclarationOfTax(inspection.getUser().getDeclarationOfTax());
+            userDto.setEmail(inspection.getUser().getEmail());
+            userDto.setUsername(inspection.getUser().getUsername());
+            userDto.setHourRate(inspection.getUser().getHourRate());
+            userDto.setNumberOfChildren(inspection.getUser().getNumberOfChildren());
+            userDto.setRole(inspection.getUser().getRole().getId());
+            userDto.setJobPosition(inspection.getUser().getJobPosition());
+            inspectionOutDto.setUserDto(userDto);
+        }
+        if(inspection.getCar()!=null){
+            CarDto carDto= new CarDto();
+            carDto.setExpiryDateOfSTK(inspection.getCar().getExpiryDateOfSTK());
+            carDto.setOperable(inspection.getCar().getOperable());
+            carDto.setSpz(inspection.getCar().getSpz());
+            carDto.setVin(inspection.getCar().getVin());
+            inspectionOutDto.setCarDto(carDto);
+        }
         return inspectionOutDto;
     }
 
@@ -210,6 +238,15 @@ public class ConversionService {
         inspection.setUser(user);
         return inspection;
     }
+
+    /*public CarDto convertToCarOutDto(Car car) {
+        CarDto carDto = new CarDto();
+        carDto.setVin(car.getVin());
+        carDto.setSpz(car.getVin());
+        carDto.setOperable(car.getOperable());
+        carDto.setExpiryDateOfSTK(car.getExpiryDateOfSTK());
+        if(car.ge)
+    }*/
 
 //    public static OwnerDetailOutDto convertToOwnerDetailOutDto(Owner owner, Page<Car> carPage) {
 //        OwnerDetailOutDto ownerDetailOutDto = new OwnerDetailOutDto();
