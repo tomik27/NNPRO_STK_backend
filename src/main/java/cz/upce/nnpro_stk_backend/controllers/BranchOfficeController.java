@@ -58,6 +58,21 @@ public class BranchOfficeController {
         return ResponseEntity.ok(branchOfficeService.getAllOffices());
     }
 
+    @Operation(summary = "Get wages of branch office")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Branch office returned",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UserWageDto.class))}),
+            @ApiResponse(responseCode = "401", description = "unauthorized",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Branch office not found",
+                    content = @Content),})
+    @GetMapping("/getAllWages/{officeId}")
+    public ResponseEntity<?> getAllWages(@PathVariable Long officeId) {
+        return ResponseEntity.ok(branchOfficeService.getAllWagesOfOffice(officeId));
+    }
+
+
     @Operation(summary = "Add branch office")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Branch office added",

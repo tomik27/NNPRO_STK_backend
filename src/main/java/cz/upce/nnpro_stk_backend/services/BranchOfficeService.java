@@ -2,15 +2,12 @@ package cz.upce.nnpro_stk_backend.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cz.upce.nnpro_stk_backend.dtos.InspectionOutDto;
+import cz.upce.nnpro_stk_backend.dtos.*;
 import cz.upce.nnpro_stk_backend.entities.BranchOffice;
 
 import cz.upce.nnpro_stk_backend.entities.Car;
 import cz.upce.nnpro_stk_backend.entities.Inspection;
 import cz.upce.nnpro_stk_backend.entities.User;
-import cz.upce.nnpro_stk_backend.dtos.BranchOfficeIdUserIdDto;
-import cz.upce.nnpro_stk_backend.dtos.BranchOfficeInDto;
-import cz.upce.nnpro_stk_backend.dtos.UserDetailOutDto;
 import cz.upce.nnpro_stk_backend.repositories.BranchOfficeRepository;
 
 import cz.upce.nnpro_stk_backend.repositories.CarRepository;
@@ -19,10 +16,9 @@ import cz.upce.nnpro_stk_backend.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Service
@@ -78,6 +74,29 @@ public class BranchOfficeService {
         return branchOffice;
     }
 
+    public List<UserWageDto> getAllWagesOfOffice(Long officeId) {
+        BranchOffice branchOffice = branchOfficeRepository.findById(officeId).orElseThrow(() -> new NoSuchElementException("Branch office not found!"));
+        Set<User> usersSet = branchOffice.getUsers();
+        List<UserWageDto> usersWithWage = new ArrayList<>();
+        usersSet.forEach(user -> {
+            AtomicLong timeWorksInMinutes= new AtomicLong();
+            int numberOfInspection = user.getInspections().size();
+            user.getInspections().forEach(inspection -> {
+                timeWorksInMinutes.addAndGet(inspection.getInspectionTime());});
+          long hours=  timeWorksInMinutes.get()/60;
+
+          if(user.getHourRate()==0)
+              user.setHourRate(100);
+
+            long salary = hours * user.getHourRate();
+
+            UserWageDto userWageDto = ConversionService.convertToUserWageDto(user, (int) salary, numberOfInspection, (int) hours);
+            usersWithWage.add(userWageDto);
+        });
+
+        return usersWithWage;
+    }
+
     public UserDetailOutDto addUserToOffice(BranchOfficeIdUserIdDto branchOfficeIdUserIdDto) {
 
         User user = userRepository.findById(branchOfficeIdUserIdDto.getUserId()).orElseThrow(() -> new NoSuchElementException("User not found!"));
@@ -109,6 +128,7 @@ public class BranchOfficeService {
         List<BranchOffice> branchOffices = branchOfficeRepository.findAll();
         return branchOffices;
     }
+
 
     public String exportData() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
@@ -195,4 +215,6 @@ public class BranchOfficeService {
 
         inspectionRepository.saveAll(finalInspection);
     }
+
+
 }

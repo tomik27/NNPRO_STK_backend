@@ -248,6 +248,20 @@ public class ConversionService {
         return inspection;
     }
 
+    public static UserWageDto convertToUserWageDto(User user, int salary, int numberOfInspection, int hoursWorked) {
+        UserWageDto userWageDto = new UserWageDto();
+        userWageDto.setMonthSalary(salary);
+        userWageDto.setNumberOfInspection(numberOfInspection);
+        userWageDto.setHourRate(user.getHourRate());
+        userWageDto.setNumberOfChildren(user.getNumberOfChildren());
+        userWageDto.setDeclarationOfTax(user.getDeclarationOfTax());
+        userWageDto.setRole(user.getRole());
+        userWageDto.setNumberOfHoursWorked(hoursWorked);
+        userWageDto.setUsername(user.getUsername());
+
+        return userWageDto;
+    }
+
     /*public CarDto convertToCarOutDto(Car car) {
         CarDto carDto = new CarDto();
         carDto.setVin(car.getVin());

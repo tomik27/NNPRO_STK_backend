@@ -118,4 +118,8 @@ public class UserService {
 
         }
     }
+
+    public Integer getSalary(Long userId) {
+        return  10;
+    }
 }

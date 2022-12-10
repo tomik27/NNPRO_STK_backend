@@ -68,6 +68,21 @@ public class UserController {
         return ResponseEntity.ok(userService.getUser(userId));
     }
 
+    @Operation(summary = "Get user info")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User returned",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Integer.class))}),
+            @ApiResponse(responseCode = "401", description = "unauthorized",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "User not found",
+                    content = @Content),})
+    @SecurityRequirement(name = "NNPRO_API")
+    @GetMapping("/getSalary/{userId}")
+    public ResponseEntity<?> getSalary(@PathVariable Long userId) {
+        return ResponseEntity.ok(userService.getSalary(userId));
+    }
+
     @Operation(summary = "Get all users")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User returned",
