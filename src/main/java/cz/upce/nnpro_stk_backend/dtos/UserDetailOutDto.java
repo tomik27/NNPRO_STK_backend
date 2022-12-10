@@ -20,6 +20,16 @@ public class UserDetailOutDto {
     //   @NotBlank(message = "Number of children is mandatory.")
     private int numberOfChildren;
 
+    private String fullName;
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
     public Set<Inspection> getInspections() {
         return inspections;
     }

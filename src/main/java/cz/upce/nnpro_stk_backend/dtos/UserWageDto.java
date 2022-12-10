@@ -4,7 +4,7 @@ import cz.upce.nnpro_stk_backend.entities.Role;
 
 public class UserWageDto {
     private Role role;
-    private String username;
+    private String fullName;
     private int hourRate;
     //  @NotBlank(message = "declarationOfTax is mandatory.")
     private boolean declarationOfTax;
@@ -17,14 +17,12 @@ public class UserWageDto {
 
     private int numberOfHoursWorked;
 
-
-
-    public String getUsername() {
-        return username;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public int getNumberOfHoursWorked() {

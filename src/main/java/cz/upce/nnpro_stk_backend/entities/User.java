@@ -32,7 +32,15 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<Inspection> inspections;
 
+    private String fullName;
 
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
     public Set<Inspection> getInspections() {
         return inspections;

@@ -18,6 +18,7 @@ public class ConversionService {
         userDto.setHourRate(user.getHourRate());
         userDto.setPassword(user.getPassword());
         userDto.setNumberOfChildren(user.getNumberOfChildren());
+        userDto.setFullName(user.getFullName());
         if (user.getBranchOffice() != null) {
             BranchOfficeDto branchOfficeDto = new BranchOfficeDto();
             branchOfficeDto.setId(user.getBranchOffice().getId());
@@ -128,6 +129,8 @@ public class ConversionService {
         user.setHourRate(userDto.getHourRate());
         user.setNumberOfChildren(userDto.getNumberOfChildren());
         user.setDeclarationOfTax(userDto.getDeclarationOfTax());
+        user.setFullName(userDto.getFullName());
+
 
         role.ifPresent(user::setRole);
         return user;
@@ -140,6 +143,8 @@ public class ConversionService {
         user.setHourRate(userDto.getHourRate());
         user.setNumberOfChildren(userDto.getNumberOfChildren());
         user.setJobPosition(userDto.getJobPosition());
+        user.setFullName(userDto.getFullName());
+
         role.ifPresent(user::setRole);
         return user;
     }
@@ -214,6 +219,7 @@ public class ConversionService {
             userDto.setNumberOfChildren(inspection.getUser().getNumberOfChildren());
             userDto.setRole(inspection.getUser().getRole().getId());
             userDto.setJobPosition(inspection.getUser().getJobPosition());
+            userDto.setFullName(inspection.getUser().getFullName());
             inspectionOutDto.setUserDto(userDto);
         }
         if(inspection.getCar()!=null){
@@ -257,7 +263,7 @@ public class ConversionService {
         userWageDto.setDeclarationOfTax(user.getDeclarationOfTax());
         userWageDto.setRole(user.getRole());
         userWageDto.setNumberOfHoursWorked(hoursWorked);
-        userWageDto.setUsername(user.getUsername());
+        userWageDto.setFullName(user.getFullName());
 
         return userWageDto;
     }

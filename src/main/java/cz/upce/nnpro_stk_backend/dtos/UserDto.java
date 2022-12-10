@@ -15,6 +15,19 @@ public class UserDto {
     private int hourRate;
     private boolean declarationOfTax;
     private int numberOfChildren;
+    private String fullName;
+
+    public boolean isDeclarationOfTax() {
+        return declarationOfTax;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
     public int getHourRate() {
         return hourRate;
