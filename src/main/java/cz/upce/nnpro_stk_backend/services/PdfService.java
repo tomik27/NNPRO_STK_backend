@@ -4,12 +4,16 @@ import com.lowagie.text.*;
 import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfWriter;
+import cz.upce.nnpro_stk_backend.dtos.CarFromCrvDto;
+import cz.upce.nnpro_stk_backend.entities.Car;
+import cz.upce.nnpro_stk_backend.entities.FaultOfInspection;
 import cz.upce.nnpro_stk_backend.entities.Inspection;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.Set;
 import java.util.logging.Logger;
 
 @Service
@@ -43,7 +47,23 @@ public class PdfService {
         return new ByteArrayInputStream(out.toByteArray());
     }
 
-    public ByteArrayInputStream createPdf2(Inspection inspection)  {
+    public ByteArrayInputStream createPdf2(Inspection inspection, CarFromCrvDto carFromCrvDto)  {
+        Car car = inspection.getCar();
+
+        int a=0;
+        int b=0;
+        int c=0;
+        Set<FaultOfInspection> faultInspections = inspection.getFaultInspections();
+        for (FaultOfInspection fault:  faultInspections) {
+            String designation = fault.getFault().getTypeOfFault().getDesignation();
+                 if(designation.equals("A"))
+                     a++;
+                 else if(designation.equals("B"))
+                     b++;
+                 else if(designation.equals("C"))
+                     c++;
+
+        }
         Document document = new Document(PageSize.A4, 50, 50, 50, 50);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try
@@ -133,13 +153,13 @@ public class PdfService {
             ownerCell.setBorderWidth(0);
             Cell dateCell=new Cell("Datum kontroly:");
             dateCell.setBorderWidth(0);
-            Cell vinCellData=new Cell("N6468ESFSSEFS648");
+            Cell vinCellData=new Cell(car.getVin());
             vinCellData.setBorderWidth(0);
-            Cell spzCellData=new Cell("wad5ladkk");
+            Cell spzCellData=new Cell(car.getSpz());
             spzCellData.setBorderWidth(0);
             Cell ownerCellData=new Cell("Lukáš Novák");
             ownerCellData.setBorderWidth(0);
-            Cell dateCellData=new Cell("27. prosince.2022");
+            Cell dateCellData=new Cell(inspection.getDate().toString());
             dateCellData.setBorderWidth(0);
 
             table1.addCell(vinCell);
@@ -174,11 +194,11 @@ public class PdfService {
             Cell cCell=new Cell("NEBEZPEČNÉ (C) (pocet závad) :");
             cCell.setBorderWidth(0);
 
-            Cell aCellData=new Cell("0");
+            Cell aCellData=new Cell(String.valueOf(a));
             aCellData.setBorderWidth(0);
-            Cell bCellData=new Cell("1");
+            Cell bCellData=new Cell(String.valueOf(b));
             bCellData.setBorderWidth(0);
-            Cell cCellData=new Cell("2");
+            Cell cCellData=new Cell(String.valueOf(c));
             cCellData.setBorderWidth(0);
 
             table2.addCell(aCell);

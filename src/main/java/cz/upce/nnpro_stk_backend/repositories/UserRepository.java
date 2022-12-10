@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     @Transactional
@@ -20,6 +22,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByUsernameAndIdIsNot(String username, Long id);
 
     User findByUsername(String username);
+
+    List<User> findUserByUsername(String username);
 
     boolean existsByRoleName(String name);
 }

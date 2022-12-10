@@ -15,5 +15,5 @@ public class CarFromCrvDto {
     private boolean isInDeposit = false;
     private LocalDate yearOfCreation;
     private String vin;
-    //private List<OwnerInCarDto> owners;
+    private List<OwnerInCarDto> owners;
 }

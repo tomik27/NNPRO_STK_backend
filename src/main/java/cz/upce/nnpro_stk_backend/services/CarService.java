@@ -23,6 +23,9 @@ public class CarService {
     }
 
     public Car addCar(CarDto carDto){
+        if(carRepository.existsBySpz(carDto.getSpz()))
+            throw new IllegalArgumentException("The car already exists.");
+
         Car car = ConversionService.convertToCar(carDto);
         Car save = carRepository.save(car);
         return save;

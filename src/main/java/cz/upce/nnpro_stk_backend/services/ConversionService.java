@@ -181,11 +181,20 @@ public class ConversionService {
         return listFaultsDto;
     }
 
+    public static Inspection  convertToInspection(InspectionOutDto inspectionOutDto,BranchOffice branchOffice, Car car,User user){
+        Inspection inspection = new Inspection();
+        inspection.setInspectionTime(inspectionOutDto.getInspectionTime());
+        inspection.setDate(inspectionOutDto.getDate());
+        inspection.setUser(user);
+        inspection.setBranchOffice(branchOffice);
+        inspection.setCar(car);
+        return inspection;
+    }
+
     public static InspectionOutDto convertToInspectionOutDto(Inspection inspection, List<FaultOfInspectionDto> faultOfInspectionDtos) {
         InspectionOutDto inspectionOutDto = new InspectionOutDto();
         inspectionOutDto.setInspectionTime(inspection.getInspectionTime());
         inspectionOutDto.setFaultsOfInspectionList(faultOfInspectionDtos);
-        inspectionOutDto.setDate(inspection.getDate());
         inspectionOutDto.setDate(inspection.getDate());
 
         if (inspection.getBranchOffice() != null) {

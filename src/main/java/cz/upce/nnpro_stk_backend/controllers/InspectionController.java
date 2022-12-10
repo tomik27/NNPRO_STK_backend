@@ -146,8 +146,7 @@ public class InspectionController {
     @Operation(summary = "Get PDF")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "PDF of inspection returned",
-                    content = {@Content(mediaType = "application/pdf",
-                            schema = @Schema(implementation = Inspection.class))}),
+                    content = {@Content(mediaType = "application/pdf")}),
             @ApiResponse(responseCode = "401", description = "unauthorized",
                     content = @Content),
             @ApiResponse(responseCode = "500", description = "Inspection not found",

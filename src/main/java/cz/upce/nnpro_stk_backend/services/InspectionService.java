@@ -4,6 +4,7 @@ import cz.upce.nnpro_stk_backend.dtos.*;
 import cz.upce.nnpro_stk_backend.entities.*;
 import cz.upce.nnpro_stk_backend.repositories.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;
@@ -82,8 +83,14 @@ public class InspectionService {
 
     public ByteArrayInputStream getPDF(Long inspectionId) {
         Inspection inspection = inspectionRepository.findById(inspectionId).orElseThrow(() -> new NoSuchElementException("Inspection not found!"));
-
-        return  pdfService.createPdf2(inspection);
+        CarFromCrvDto car = getCarFullInormation(inspection.getCar().getSpz());
+        return  pdfService.createPdf2(inspection,car);
+    }
+    private CarFromCrvDto getCarFullInormation(String spz){
+        RestTemplate restTemplate = new RestTemplate();
+        CarFromCrvDto carFromCrvDto =null;
+        //restTemplate.getForObject("http://localhost:8081/getCar/" + spz, CarFromCrvDto.class);
+        return carFromCrvDto;
     }
 
     public FaultOfInspection removeFaultFromInspection(FaultOfInspectionInDto faultOfInspectionInDto) {

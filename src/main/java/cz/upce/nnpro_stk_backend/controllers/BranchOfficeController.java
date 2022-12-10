@@ -140,4 +140,24 @@ public class BranchOfficeController {
         return errorDto;
     }
 
+    @PreAuthorize("hasRole('ROLE_Admin')")
+    @GetMapping("/exportData")
+    public ResponseEntity<?> exportDataToJson() throws JsonProcessingException {
+        return ResponseEntity.ok(branchOfficeService.exportData());
+    }
+    @PreAuthorize("hasRole('ROLE_Admin')")
+    @PutMapping("/importData")
+    public void importDataToJson(@Valid @RequestBody UsersInspectionsCarsDto inspectionsDto) {
+        branchOfficeService.importData(inspectionsDto.getCars(), inspectionsDto.getInspections(),inspectionsDto.getUsers());
+    }
+
+
+
+    /*@PreAuthorize("hasRole('ROLE_Admin') || hasRole('ROLE_Okres')")
+    @PutMapping("/importData")
+    public void importDataToJson(@Valid @RequestBody CarsOwnersDto carsOwnersDto) {
+        //int a = 0;
+        branchOfficeService.importData(carsOwnersDto.getCars(), carsOwnersDto.getOwners());
+    }*/
+
 }
