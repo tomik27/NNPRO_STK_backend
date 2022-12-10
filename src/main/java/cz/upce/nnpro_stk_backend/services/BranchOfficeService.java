@@ -90,7 +90,20 @@ public class BranchOfficeService {
 
             long salary = hours * user.getHourRate();
 
-            UserWageDto userWageDto = ConversionService.convertToUserWageDto(user, (int) salary, numberOfInspection, (int) hours);
+             int taxRelief=returnTaxBonus(user.getNumberOfChildren());
+             if(user.getDeclarationOfTax()==true)
+                 taxRelief+=2570;
+
+
+             int healthInsurance=(int)(salary*0.045);
+
+             int socialInsurance=(int)(salary*0.065);
+
+             int tax=(int)(salary*0.15);
+
+             salary=salary-healthInsurance-socialInsurance-tax+taxRelief;
+
+            UserWageDto userWageDto = ConversionService.convertToUserWageDto(user, (int) salary, numberOfInspection, (int) hours,taxRelief,tax,healthInsurance,socialInsurance);
             usersWithWage.add(userWageDto);
         });
 
@@ -214,6 +227,20 @@ public class BranchOfficeService {
         });
 
         inspectionRepository.saveAll(finalInspection);
+    }
+
+
+    private int returnTaxBonus(int numberOfKids){
+        int totalSum=0;
+        for (int i = 1; i <=numberOfKids; i++) {
+            if(i==1)
+                totalSum+=1267;
+            else if(i==2)
+                totalSum+=1860;
+            else if(i>2)
+                totalSum+= 2320;
+        }
+        return totalSum;
     }
 
 

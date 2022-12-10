@@ -17,6 +17,47 @@ public class UserWageDto {
 
     private int numberOfHoursWorked;
 
+    //Sleva na dani - Prohlaseni poplatnika + bonus na dani za deti
+    private int taxRelief;
+
+    private int healthInsurance;
+
+    private int socialInsurance;
+
+    private int tax;
+
+    public int getTaxRelief() {
+        return taxRelief;
+    }
+
+    public void setTaxRelief(int taxRelief) {
+        this.taxRelief = taxRelief;
+    }
+
+    public int getHealthInsurance() {
+        return healthInsurance;
+    }
+
+    public void setHealthInsurance(int healthInsurance) {
+        this.healthInsurance = healthInsurance;
+    }
+
+    public int getSocialInsurance() {
+        return socialInsurance;
+    }
+
+    public void setSocialInsurance(int socialInsurance) {
+        this.socialInsurance = socialInsurance;
+    }
+
+    public int getTax() {
+        return tax;
+    }
+
+    public void setTax(int tax) {
+        this.tax = tax;
+    }
+
     public String getFullName() {
         return fullName;
     }

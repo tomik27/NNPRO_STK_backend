@@ -254,7 +254,7 @@ public class ConversionService {
         return inspection;
     }
 
-    public static UserWageDto convertToUserWageDto(User user, int salary, int numberOfInspection, int hoursWorked) {
+    public static UserWageDto convertToUserWageDto(User user, int salary, int numberOfInspection, int hoursWorked,int taxRelief,int tax,int healthInsurance,int socialInsurance) {
         UserWageDto userWageDto = new UserWageDto();
         userWageDto.setMonthSalary(salary);
         userWageDto.setNumberOfInspection(numberOfInspection);
@@ -264,6 +264,10 @@ public class ConversionService {
         userWageDto.setRole(user.getRole());
         userWageDto.setNumberOfHoursWorked(hoursWorked);
         userWageDto.setFullName(user.getFullName());
+        userWageDto.setHealthInsurance(healthInsurance);
+        userWageDto.setTax(tax);
+        userWageDto.setSocialInsurance(socialInsurance);
+        userWageDto.setTaxRelief(taxRelief);
 
         return userWageDto;
     }
