@@ -29,8 +29,9 @@ public class ScheduledConfig {
         public ScheduledConfig(EmailService emailService) {
                 this.emailService = emailService;
         }
-/*
-        @Scheduled(cron = "0 0 21,22 * * *")
+
+        /*
+        @Scheduled(cron = "0 0 16,17 * * *")
         public void invokeScheduled() {
                 List<Car> allCars = carService.getAllCars();
                 for (int i = 0; i < allCars.size(); i++)
@@ -43,10 +44,11 @@ public class ScheduledConfig {
                         long days = tempDateTime.until( expiryDateOfSTK, ChronoUnit.DAYS );
                         tempDateTime = tempDateTime.plusDays( days );
                         System.out.println("Days "+days);
-                         if(days<=30)
+                         if(days>0&&days<=30)
                                 sendMail(car);
                 }
-        }*/
+        }
+         */
 
         private void sendMail(Car car){
                 //todo get emailBySPZ from CRV

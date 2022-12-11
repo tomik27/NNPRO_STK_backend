@@ -50,11 +50,11 @@ public class PdfService {
 
     public ByteArrayInputStream createPdf2(Inspection inspection, CarFromCrvDto carFromCrvDto)  {
         Car car = inspection.getCar();
-        String name="Tomas Slaby";
+        String name="Tomas Slabý";
         if(carFromCrvDto!=null) {
             if (carFromCrvDto.getOwners() != null) {
                 OwnerInCarDto ownerInCarDto = carFromCrvDto.getOwners().get(0);
-                 name = ownerInCarDto.getFirstName() + ownerInCarDto.getLastName();
+                 name = ownerInCarDto.getFirstName() +" "+ ownerInCarDto.getLastName();
             }
         }
         int a=0;

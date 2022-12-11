@@ -1,9 +1,6 @@
 package cz.upce.nnpro_stk_backend.controllers;
 
-import cz.upce.nnpro_stk_backend.dtos.BranchOfficeInDto;
-import cz.upce.nnpro_stk_backend.dtos.CarDto;
-import cz.upce.nnpro_stk_backend.dtos.CarOutDto;
-import cz.upce.nnpro_stk_backend.dtos.InspectionInDto;
+import cz.upce.nnpro_stk_backend.dtos.*;
 import cz.upce.nnpro_stk_backend.entities.BranchOffice;
 import cz.upce.nnpro_stk_backend.entities.Car;
 import cz.upce.nnpro_stk_backend.entities.Fault;
@@ -130,7 +127,7 @@ public class CarController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Check went through. ",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = boolean.class))}),
+                            schema = @Schema(implementation = CarFromCrvDto.class))}),
             @ApiResponse(responseCode = "401", description = "unauthorized",
                     content = @Content)})
     @GetMapping("/getCarInfoFromCrvBySpz/{spz}")

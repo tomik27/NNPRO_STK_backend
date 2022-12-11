@@ -22,7 +22,6 @@ public class EmailService {
     {
         // Try block to check for exceptions
         try {
-
             // Creating a simple mail message
             SimpleMailMessage mailMessage
                     = new SimpleMailMessage();

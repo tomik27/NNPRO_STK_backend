@@ -59,42 +59,49 @@ public class CarService {
 
     public boolean isCarStolenBySpz(String spz) {
         RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.getForObject("http://localhost:8081/getCarBySpz/" + spz, String.class);
-        return result != null;
+        try {
+            CarFromCrvDto result = restTemplate.getForObject("http://localhost:8081/car/getCarBySpz/" + spz, CarFromCrvDto.class);
+           return result.isStolen();
+        }catch (Exception e){
+            return false;
+        }
     }
 
     public boolean isCarStolenByVin(String vin) {
         RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.getForObject("http://localhost:8081/getCarByVin/" + vin, String.class);
+        String result = restTemplate.getForObject("http://localhost:8081/car/getCarByVin/" + vin, String.class);
         return result != null;
     }
 
-    public CarDetailOutDto getCarFromCRV(Long carId) {
-        RestTemplate restTemplate = new RestTemplate();
-        CarDetailOutDto carDetailOutDto = restTemplate.getForObject("http://localhost:8081/getCar/" + carId, CarDetailOutDto.class);
-        return carDetailOutDto;
-    }
+
 
 
     public CarFromCrvDto getCarInfoFromCrvBySpz(String spz) {
         RestTemplate restTemplate = new RestTemplate();
-        CarFromCrvDto carFromCrvDto = restTemplate.getForObject("http://localhost:8081/getCar/" + spz, CarFromCrvDto.class);
-        return carFromCrvDto;
+        try {
+            CarFromCrvDto carFromCrvDto = restTemplate.getForObject("http://localhost:8081/car/getCarBySpz/" + spz, CarFromCrvDto.class);
+            return carFromCrvDto;
+        }catch (Exception e){
+            return null;
+        }
     }
 
-   /* @PostConstruct
+    @PostConstruct
     public void init() throws Exception {
         LocalDate date = LocalDate.now();
-        Car car = new Car();
-        car.setVin("4Y1SL65848Z411439");
-        car.setSpz("1E1 1112");
-        car.setExpiryDateOfSTK(date.plusDays(20));
-
-        Car car1 = new Car();
-        car1.setVin("4Y1SL65848Z411439");
-        car1.setSpz("1E1 1113");
-        car1.setExpiryDateOfSTK(date.plusDays(20));
-
-        carRepository.save(car);
-        carRepository.save(car1);*/
+        if (!carRepository.existsBySpz("1E1 1112")) {
+            Car car = new Car();
+            car.setVin("4Y1SL65848Z411439");
+            car.setSpz("1E1 1112");
+            car.setExpiryDateOfSTK(date.plusDays(20));
+            carRepository.save(car);
+        }
+        if (!carRepository.existsBySpz("1E1 1113")) {
+            Car car1 = new Car();
+            car1.setVin("4Y1SL65848Z411439");
+            car1.setSpz("1E1 1113");
+            car1.setExpiryDateOfSTK(date.plusDays(20));
+            carRepository.save(car1);
+        }
+    }
 }

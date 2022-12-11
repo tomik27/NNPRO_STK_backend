@@ -88,8 +88,7 @@ public class InspectionService {
     }
     private CarFromCrvDto getCarFullInormation(String spz){
         RestTemplate restTemplate = new RestTemplate();
-        CarFromCrvDto carFromCrvDto =null;
-        //restTemplate.getForObject("http://localhost:8081/getCar/" + spz, CarFromCrvDto.class);
+        CarFromCrvDto carFromCrvDto =restTemplate.getForObject("http://localhost:8081/car/getCarBySpz/" + spz, CarFromCrvDto.class);
         return carFromCrvDto;
     }
 
