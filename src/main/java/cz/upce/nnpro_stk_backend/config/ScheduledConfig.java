@@ -30,7 +30,7 @@ public class ScheduledConfig {
                 this.emailService = emailService;
         }
 
-        /*
+        //cron = "0 0 16,17 * * *"
         @Scheduled(cron = "0 0 16,17 * * *")
         public void invokeScheduled() {
                 List<Car> allCars = carService.getAllCars();
@@ -41,16 +41,16 @@ public class ScheduledConfig {
                         //LocalDate currentLocalDate= LocalDate.now();
                         LocalDate tempDateTime = LocalDate.from( LocalDate.now() );
 
-                        long days = tempDateTime.until( expiryDateOfSTK, ChronoUnit.DAYS );
+                        int days = (int) tempDateTime.until( expiryDateOfSTK, ChronoUnit.DAYS );
                         tempDateTime = tempDateTime.plusDays( days );
                         System.out.println("Days "+days);
                          if(days>0&&days<=30)
-                                sendMail(car);
+                                sendMail(car,days);
                 }
         }
-         */
 
-        private void sendMail(Car car){
+
+        private void sendMail(Car car, int day){
                 //todo get emailBySPZ from CRV
                 String SPZ=car.getSpz();
                 CarFromCrvDto carInfoFromCrvBySpz = carService.getCarInfoFromCrvBySpz(SPZ);
@@ -65,9 +65,9 @@ public class ScheduledConfig {
                 emailDetails.setRecipient(email);
                 emailDetails.setSubject("Upozornění na končící STK");
                 String hello="Vážený zákazníku,";
-                String introduction="dovolujeme si Vás upozornit, že za 30 dní Vám končí STK vašeho auta. SPZ:.";
+                String introduction="dovolujeme si Vás upozornit, že za "+day+" dní Vám končí platnost STK vašeho auta. SPZ: "+car.getSpz();
                 String findUS="Prosíme, navštivte nás, co nejdříve. Adresa STK: Technická 131, 583 01 Pardubice 3";
-                String  generate="Tento mail byl vygenerován. Neodpovídejte na něj.";
+                String  generate="Tento mail byl vygenerován.";
                 String bye="Děkujeme,"+"\n"+" Vaše STK Pardubice."+"\n"+"Tel. číslo: 123456789.";
                 emailDetails.setMsgBody(hello+ "\n"+introduction+"\n\n" +findUS+ "\n\n"+generate+"\n\n"+bye );
 

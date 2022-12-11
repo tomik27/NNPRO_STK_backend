@@ -89,17 +89,17 @@ public class CarService {
     @PostConstruct
     public void init() throws Exception {
         LocalDate date = LocalDate.now();
-        if (!carRepository.existsBySpz("1E1 1112")) {
+        if (!carRepository.existsBySpz("1E1 1111")) {
             Car car = new Car();
             car.setVin("4Y1SL65848Z411439");
-            car.setSpz("1E1 1112");
+            car.setSpz("1E1 1111");
             car.setExpiryDateOfSTK(date.plusDays(20));
             carRepository.save(car);
         }
-        if (!carRepository.existsBySpz("1E1 1113")) {
+        if (!carRepository.existsBySpz("1E1 1112")) {
             Car car1 = new Car();
             car1.setVin("4Y1SL65848Z411439");
-            car1.setSpz("1E1 1113");
+            car1.setSpz("1E1 1112");
             car1.setExpiryDateOfSTK(date.plusDays(20));
             carRepository.save(car1);
         }
