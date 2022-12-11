@@ -5,6 +5,7 @@ import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfWriter;
 import cz.upce.nnpro_stk_backend.dtos.CarFromCrvDto;
+import cz.upce.nnpro_stk_backend.dtos.OwnerInCarDto;
 import cz.upce.nnpro_stk_backend.entities.Car;
 import cz.upce.nnpro_stk_backend.entities.FaultOfInspection;
 import cz.upce.nnpro_stk_backend.entities.Inspection;
@@ -49,7 +50,13 @@ public class PdfService {
 
     public ByteArrayInputStream createPdf2(Inspection inspection, CarFromCrvDto carFromCrvDto)  {
         Car car = inspection.getCar();
-
+        String name="Tomas Slaby";
+        if(carFromCrvDto!=null) {
+            if (carFromCrvDto.getOwners() != null) {
+                OwnerInCarDto ownerInCarDto = carFromCrvDto.getOwners().get(0);
+                 name = ownerInCarDto.getFirstName() + ownerInCarDto.getLastName();
+            }
+        }
         int a=0;
         int b=0;
         int c=0;
@@ -157,7 +164,7 @@ public class PdfService {
             vinCellData.setBorderWidth(0);
             Cell spzCellData=new Cell(car.getSpz());
             spzCellData.setBorderWidth(0);
-            Cell ownerCellData=new Cell("Lukáš Novák");
+            Cell ownerCellData=new Cell(name);
             ownerCellData.setBorderWidth(0);
             Cell dateCellData=new Cell(inspection.getDate().toString());
             dateCellData.setBorderWidth(0);

@@ -10,6 +10,8 @@ import cz.upce.nnpro_stk_backend.repositories.InspectionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.PostConstruct;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -79,4 +81,20 @@ public class CarService {
         CarFromCrvDto carFromCrvDto = restTemplate.getForObject("http://localhost:8081/getCar/" + spz, CarFromCrvDto.class);
         return carFromCrvDto;
     }
+
+   /* @PostConstruct
+    public void init() throws Exception {
+        LocalDate date = LocalDate.now();
+        Car car = new Car();
+        car.setVin("4Y1SL65848Z411439");
+        car.setSpz("1E1 1112");
+        car.setExpiryDateOfSTK(date.plusDays(20));
+
+        Car car1 = new Car();
+        car1.setVin("4Y1SL65848Z411439");
+        car1.setSpz("1E1 1113");
+        car1.setExpiryDateOfSTK(date.plusDays(20));
+
+        carRepository.save(car);
+        carRepository.save(car1);*/
 }

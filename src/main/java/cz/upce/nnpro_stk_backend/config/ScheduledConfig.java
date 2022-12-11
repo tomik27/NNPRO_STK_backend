@@ -1,5 +1,7 @@
 package cz.upce.nnpro_stk_backend.config;
 
+import cz.upce.nnpro_stk_backend.dtos.CarFromCrvDto;
+import cz.upce.nnpro_stk_backend.dtos.OwnerInCarDto;
 import cz.upce.nnpro_stk_backend.entities.Car;
 import cz.upce.nnpro_stk_backend.mail.EmailDetails;
 import cz.upce.nnpro_stk_backend.services.CarService;
@@ -22,6 +24,7 @@ public class ScheduledConfig {
         private ModelMapper mapper;
 
         private final EmailService emailService;
+
 
         public ScheduledConfig(EmailService emailService) {
                 this.emailService = emailService;
@@ -48,9 +51,16 @@ public class ScheduledConfig {
         private void sendMail(Car car){
                 //todo get emailBySPZ from CRV
                 String SPZ=car.getSpz();
+                CarFromCrvDto carInfoFromCrvBySpz = carService.getCarInfoFromCrvBySpz(SPZ);
+                if(carInfoFromCrvBySpz==null||carInfoFromCrvBySpz.getOwners()==null||carInfoFromCrvBySpz.getOwners().size()==0)
+                        throw new IllegalArgumentException("The car from crv not loaded.");
+
+
+                OwnerInCarDto ownerInCarDto = carInfoFromCrvBySpz.getOwners().get(0);
+                String email = ownerInCarDto.getEmail();
                 LocalDate localDate = car.getExpiryDateOfSTK();
                 EmailDetails emailDetails = new EmailDetails();
-                emailDetails.setRecipient("tstomikac@gmail.com");
+                emailDetails.setRecipient(email);
                 emailDetails.setSubject("Upozornění na končící STK");
                 String hello="Vážený zákazníku,";
                 String introduction="dovolujeme si Vás upozornit, že za 30 dní Vám končí STK vašeho auta. SPZ:.";

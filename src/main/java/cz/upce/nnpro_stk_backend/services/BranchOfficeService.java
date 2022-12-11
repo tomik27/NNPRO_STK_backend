@@ -3,21 +3,15 @@ package cz.upce.nnpro_stk_backend.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cz.upce.nnpro_stk_backend.dtos.*;
-import cz.upce.nnpro_stk_backend.entities.BranchOffice;
+import cz.upce.nnpro_stk_backend.entities.*;
 
-import cz.upce.nnpro_stk_backend.entities.Car;
-import cz.upce.nnpro_stk_backend.entities.Inspection;
-import cz.upce.nnpro_stk_backend.entities.User;
-import cz.upce.nnpro_stk_backend.repositories.BranchOfficeRepository;
+import cz.upce.nnpro_stk_backend.repositories.*;
 
-import cz.upce.nnpro_stk_backend.repositories.CarRepository;
-import cz.upce.nnpro_stk_backend.repositories.InspectionRepository;
-import cz.upce.nnpro_stk_backend.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
@@ -27,13 +21,15 @@ public class BranchOfficeService {
     private final UserRepository userRepository;
     private final CarRepository carRepository;
     private final InspectionRepository inspectionRepository;
+    private final RoleRepository roleRepository;
     private final ModelMapper modelMapper;
 
-    public BranchOfficeService(BranchOfficeRepository branchOfficeRepository, UserRepository userRepository, CarRepository carRepository, InspectionRepository inspectionRepository, ModelMapper modelMapper) {
+    public BranchOfficeService(BranchOfficeRepository branchOfficeRepository, UserRepository userRepository, CarRepository carRepository, InspectionRepository inspectionRepository, RoleRepository roleRepository, ModelMapper modelMapper) {
         this.branchOfficeRepository = branchOfficeRepository;
         this.userRepository = userRepository;
         this.carRepository = carRepository;
         this.inspectionRepository = inspectionRepository;
+        this.roleRepository = roleRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -79,10 +75,19 @@ public class BranchOfficeService {
         Set<User> usersSet = branchOffice.getUsers();
         List<UserWageDto> usersWithWage = new ArrayList<>();
         usersSet.forEach(user -> {
+        //    Calendar c = Calendar.getInstance();
+        //    int month = c.get(Calendar.MONTH);
+
+
+            //this month
             AtomicLong timeWorksInMinutes= new AtomicLong();
             int numberOfInspection = user.getInspections().size();
             user.getInspections().forEach(inspection -> {
-                timeWorksInMinutes.addAndGet(inspection.getInspectionTime());});
+                LocalDate today = LocalDate.now();
+                LocalDate start = today.withDayOfMonth(1);
+
+                if(start.isBefore(inspection.getDate()))
+                    timeWorksInMinutes.addAndGet(inspection.getInspectionTime());});
           long hours=  timeWorksInMinutes.get()/60;
 
           if(user.getHourRate()==0)
@@ -186,22 +191,21 @@ public class BranchOfficeService {
         //Cars
         List<Car> filterCars = cars.stream().filter(car -> !carRepository.existsBySpz(car.getSpz())).collect(Collectors.toList());
         filterCars.forEach(car -> car.setId(null));
-
+        Role role_technik = roleRepository.findByName("ROLE_technik");
         //users
         List<User> filterUsers = users.stream().filter(user -> !userRepository.existsByUsername(user.getUsername())).collect(Collectors.toList());
         filterUsers.forEach(user -> {
+            user.setRole(role_technik);
             //todo change password policy
             user.setPassword("$2a$10$MQuBpeE5CbgERbKN7ecd1ea/Y3XwpfWVOqKFErLjbhT382.Rgviy.");
             user.setId(null);});
         //object for inspections
-        User defaultUser = userRepository.findById(1L).orElseThrow(() -> new NoSuchElementException("User not found!"));
-        Car defaultCar = carRepository.findById(1L).orElseThrow(() -> new NoSuchElementException("Car not found!"));
+       // User defaultUser = userRepository.findById(1L).orElseThrow(() -> new NoSuchElementException("User not found!"));
+      //  Car defaultCar = carRepository.findById(1L).orElseThrow(() -> new NoSuchElementException("Car not found!"));
         BranchOffice defaultBranchOffice =branchOfficeRepository.findById(1L).orElseThrow(() -> new NoSuchElementException("Branch not found!"));
 
         carRepository.saveAll(filterCars);
         userRepository.saveAll(filterUsers);
-
-
 
             List<Inspection> finalInspection = new ArrayList<>();
             List<InspectionOutDto> filterInspections = inspectionOutDtos.stream().filter(inspectionOutDto ->inspectionOutDto.getCarDto()!=null&&inspectionOutDto.getUserDto()!=null&& userRepository.existsByUsername(inspectionOutDto.getUserDto().getUsername()) && carRepository.existsBySpz(inspectionOutDto.getCarDto().getSpz())).collect(Collectors.toList());
