@@ -69,8 +69,12 @@ public class CarService {
 
     public boolean isCarStolenByVin(String vin) {
         RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.getForObject("http://localhost:8081/car/getCarByVin/" + vin, String.class);
-        return result != null;
+        try {
+        Boolean result = restTemplate.getForObject("http://localhost:8081/car/getCarByVin/" + vin, boolean.class);
+        return result;
+    }catch (Exception e){
+        return false;
+    }
     }
 
 
@@ -103,5 +107,12 @@ public class CarService {
             car1.setExpiryDateOfSTK(date.plusDays(20));
             carRepository.save(car1);
         }
+    }
+
+    public boolean isCarExistBySpz(String spz) {
+        if(carRepository.existsBySpz(spz))
+            return true;
+
+        return false;
     }
 }

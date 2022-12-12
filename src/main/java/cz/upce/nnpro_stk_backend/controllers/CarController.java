@@ -45,6 +45,8 @@ public class CarController {
         return ResponseEntity.ok(carService.getCar(carId));
     }
 
+
+
     @Operation(summary = "Get all cars ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Cars returned",
@@ -109,6 +111,18 @@ public class CarController {
     @GetMapping("/isCarStolenByVin/{vin}")
     public ResponseEntity<?> isCarStolenByVin(@PathVariable String vin) {
         return ResponseEntity.ok(carService.isCarStolenByVin(vin));
+    }
+
+    @Operation(summary = "Check if car is exist by spz", description = "return boolean")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Check went through. ",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = boolean.class))}),
+            @ApiResponse(responseCode = "401", description = "unauthorized",
+                    content = @Content)})
+    @GetMapping("/isCarExistBySpz/{spz}")
+    public ResponseEntity<?> isCarExistBySpz(@PathVariable String spz) {
+        return ResponseEntity.ok(carService.isCarExistBySpz(spz));
     }
 
     @Operation(summary = "Check if car is stolen by spz", description = "It has to have another app started (European register of stolen vehicles)")
