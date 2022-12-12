@@ -43,6 +43,10 @@ public class CarService {
         Car car = carRepository.findById(carId).orElseThrow(() -> new NoSuchElementException("Car not found!"));
         return car;
     }
+    public Car  getCarBySpz(String spz) {
+        Car carBySpz = carRepository.findCarBySpz(spz);
+        return carBySpz;
+    }
 
     public List<Car> getAllCars() {
         List<Car> cars = carRepository.findAll();
@@ -115,4 +119,6 @@ public class CarService {
 
         return false;
     }
+
+
 }

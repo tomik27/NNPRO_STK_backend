@@ -33,7 +33,7 @@ public class CarController {
 
     @Operation(summary = "Get Car info")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Inspection returned",
+            @ApiResponse(responseCode = "200", description = "Car returned",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = CarOutDto.class))}),
             @ApiResponse(responseCode = "401", description = "unauthorized",
@@ -43,6 +43,20 @@ public class CarController {
     @GetMapping("/getCar/{carId}")
     public ResponseEntity<?> getCar(@PathVariable Long carId) {
         return ResponseEntity.ok(carService.getCar(carId));
+    }
+
+    @Operation(summary = "Get Car info by spz")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Car returned",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CarOutDto.class))}),
+            @ApiResponse(responseCode = "401", description = "unauthorized",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Car not found",
+                    content = @Content),})
+    @GetMapping("/getCarBySpz/{spz}")
+    public ResponseEntity<?> getCarBySpz(@PathVariable String spz) {
+        return ResponseEntity.ok(carService.getCarBySpz(spz));
     }
 
 
