@@ -49,7 +49,14 @@ public class PdfService {
     }
 
     public ByteArrayInputStream createPdf2(Inspection inspection, CarFromCrvDto carFromCrvDto)  {
-        Car car = inspection.getCar();
+
+        String spz= "1E1 1111";
+        String vin ="4Y1SL65848Z411439";
+        if(inspection.getCar()!=null){
+         spz = inspection.getCar().getSpz();
+         vin = inspection.getCar().getVin();
+
+        }
         String name="Tomas Slabý";
         if(carFromCrvDto!=null) {
             if (carFromCrvDto.getOwners() != null) {
@@ -160,9 +167,9 @@ public class PdfService {
             ownerCell.setBorderWidth(0);
             Cell dateCell=new Cell("Datum kontroly:");
             dateCell.setBorderWidth(0);
-            Cell vinCellData=new Cell(car.getVin());
+            Cell vinCellData=new Cell(vin);
             vinCellData.setBorderWidth(0);
-            Cell spzCellData=new Cell(car.getSpz());
+            Cell spzCellData=new Cell(spz);
             spzCellData.setBorderWidth(0);
             Cell ownerCellData=new Cell(name);
             ownerCellData.setBorderWidth(0);

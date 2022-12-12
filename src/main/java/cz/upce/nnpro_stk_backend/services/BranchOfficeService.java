@@ -113,7 +113,8 @@ public class BranchOfficeService {
             }else{
                 int tax1 = tax -taxRelief;
                 tax1 = (tax1 < 0) ? 0 : tax1;
-                salary=- healthInsurance - socialInsurance+tax1;
+                salary= salary- healthInsurance - socialInsurance+tax1;
+                salary = (salary < 0) ? 0 : salary;
             }
 
 
