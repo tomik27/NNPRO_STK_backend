@@ -224,8 +224,8 @@ public class BranchOfficeService {
 
             List<User> pomUser = userRepository.findUserByUsername(inspectionOutDto.getUserDto().getUsername());
             User user = pomUser.get(0);
-            Car car = carRepository.findCarBySpz(inspectionOutDto.getCarDto().getSpz());
-
+            List<Car> pomCars = carRepository.findCarsBySpz(inspectionOutDto.getCarDto().getSpz());
+            Car car = pomCars.get(0);
 
             Inspection inspection = ConversionService.convertToInspection(inspectionOutDto, defaultBranchOffice, car, user);
            /* if (inspectionOutDto.getUser() == null)
